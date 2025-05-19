@@ -17,3 +17,155 @@
 
 #include <libsd/libsd.h>
 
+LibsdReturnStatus libsd_init_card(LibsdCard* card) {
+
+}
+
+LibsdReturnStatus libsd_send_defined_command(LibsdCard* card, LibsdSpiDefinedCommand* cmd, LibsdSpiCommandResponse* resp) {
+    // first, we need to create a cmd_bufer with the command to send across the SPI interface
+    // each command is 48 bits (6 bytes)
+    uint8_t cmd_buf[6];
+
+    cmd_buf[0] = 0x40 | (cmd->id & 0x3F);
+    cmd_buf[1] = (cmd->arg >> 24) & 0xFF;
+    cmd_buf[2] = (cmd->arg >> 16) & 0xFF;
+    cmd_buf[3] = (cmd->arg >> 8) & 0xFF;
+    cmd_buf[4] = cmd->arg & 0xFF;
+
+    // find CRC7 for the first 5 bytes
+    uint8_t crc = crc7_calculate(cmd_buf, 5);
+
+    cmd_buf[5] = (crc << 1) | 0x01;
+
+    // send to command buffer across the SPI interface
+    libsd_spi_write_buf(card->spi, cmd_buf, 6);
+
+    uint8_t read_byte = 0xFF;
+    // it can take anywhere from 0 to 8 clock cycles for a response according to the specification
+    for(int i = 0; i <= 8; i++) {
+        libsd_spi_read_write_byte(card->spi, 0xFF, &read_byte);
+        // the SD card will hold the line high for busy, and the MSB of any response is 0, so check for that
+        if(read_byte & 0x80 == 0x00) {
+            break;
+        }
+    }
+
+    if(read_byte == 0xFF) {
+        return LIBSD_TIMEOUT; // didn't get a valid response in time from the card
+    }
+
+    if(cmd->id == CMD8) {
+        // CMD8 is the only predefined command that responds in an R7 format
+        resp->resp_r7.resp = read_byte;
+        resp->resp_r7.extra = 0;
+        // R7 format has an additional 4 bytes of status
+        for(int i = 0; i < 4; i++) {
+            libsd_spi_read_write_byte(card->spi, 0xFF, &read_byte);
+            resp->resp_r7.extra <<= 8;
+            resp->resp_r7.extra |= read_byte;
+        }
+
+        return LIBSD_OK;
+    } else if(cmd->id == CMD58) {
+        // CMD58 is the only predefined command that responds in an R3 format
+        resp->resp_r3.resp = read_byte;
+        resp->resp_r3.extra = 0;
+        // R3 format has an additional 4 bytes of status
+        for(int i = 0; i < 4; i++) {
+            libsd_spi_read_write_byte(card->spi, 0xFF, &read_byte);
+            resp->resp_r3.extra <<= 8;
+            resp->resp_r3.extra |= read_byte;
+        }
+        
+        return LIBSD_OK;
+    } else if(cmd->id == CMD13) {
+        // CMD13 is the only predefined command that responds in an R2 format
+        // need to read an extra 2 bytes
+        uint8_t read_byte_lower;
+        libsd_spi_read_write_byte(card->spi, 0xFF, &read_byte_lower);
+        resp->resp_r2.resp = read_byte;
+        resp->resp_r2.resp <<= 8;
+        resp->resp_r2.resp |= read_byte_lower;
+
+        return LIBSD_OK;
+    } else {
+        // we have a R1 response
+        // some of these can have an optional busy signal, which this checks for
+        // could probably be optimized, but this is a quick way to get this working
+        resp->resp_r1.resp = read_byte;
+        do {
+            libsd_spi_read_write_byte(card->spi, 0xFF, &read_byte);
+        } while(read_byte == 0x00);
+
+        return LIBSD_OK;
+    }
+}
+
+LibsdReturnStatus libsd_send_application_command(LibsdCard* card, LibsdSpiApplicationCommand* cmd, LibsdSpiCommandResponse* resp) {
+    // every application specific command needs a APP_CMD (CMD55) sent first
+    LibsdSpiDefinedCommand app_cmd;
+    app_cmd.arg = 0;
+    app_cmd.id = APP_CMD;
+    LibsdReturnStatus status = libsd_send_defined_command(card, &app_cmd, resp);
+    if(status != LIBSD_OK) {
+        return status;
+    }
+
+    // after we have sent the APP_CMD, send the application command
+    // same general procedure as the other
+    uint8_t cmd_buf[6];
+
+    cmd_buf[0] = 0x40 | (cmd->id & 0x3F);
+    cmd_buf[1] = (cmd->arg >> 24) & 0xFF;
+    cmd_buf[2] = (cmd->arg >> 16) & 0xFF;
+    cmd_buf[3] = (cmd->arg >> 8) & 0xFF;
+    cmd_buf[4] = cmd->arg & 0xFF;
+
+    // find CRC7 for the first 5 bytes
+    uint8_t crc = crc7_calculate(cmd_buf, 5);
+
+    cmd_buf[5] = (crc << 1) | 0x01;
+
+    // send to command buffer across the SPI interface
+    libsd_spi_write_buf(card->spi, cmd_buf, 6);
+
+    uint8_t read_byte = 0xFF;
+    // it can take anywhere from 0 to 8 clock cycles for a response according to the specification
+    for(int i = 0; i <= 8; i++) {
+        libsd_spi_read_write_byte(card->spi, 0xFF, &read_byte);
+        // the SD card will hold the line high for busy, and the MSB of any response is 0, so check for that
+        if(read_byte & 0x80 == 0x00) {
+            break;
+        }
+    }
+
+    if(read_byte == 0xFF) {
+        return LIBSD_TIMEOUT; // didn't get a valid response in time from the card
+    }
+
+    if(cmd->id == ACMD13) {
+        // ACMD13 is the only application command with an R2 response
+        // need to read an extra 2 bytes
+        uint8_t read_byte_lower;
+        libsd_spi_read_write_byte(card->spi, 0xFF, &read_byte_lower);
+        resp->resp_r2.resp = read_byte;
+        resp->resp_r2.resp <<= 8;
+        resp->resp_r2.resp |= read_byte_lower;
+
+        return LIBSD_OK;
+    } else {
+        // we have a R1 response
+        // no busy signals for these
+        resp->resp_r1.resp = read_byte;
+
+        return LIBSD_OK;
+    }
+}
+
+LibsdReturnStatus libsd_write_block(LibsdCard* card, uint8_t* write_buf, uint16_t len) {
+
+}
+
+LibsdReturnStatus libsd_read_block(LibsdCard* card, uint8_t* read_buf, uint16_t len) {
+    
+}

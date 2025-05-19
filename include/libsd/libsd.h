@@ -30,6 +30,22 @@
 #include <libsd/crc16.h>
 
 /**
+ * @brief Enumeration of return values from functions in libsd
+ * 
+ * These are values that will be returned from many functions in libsd.  Please
+ * note that these are different than the SD card response codes, and do not
+ * indicate the status of the command for the send command functions. The value
+ * for LIBSD_OK will not change, but others may be adjusted in the future if necessary.
+ */
+typedef enum {
+    LIBSD_OK = 0, // function completed successfully, no issues (does not guarantee command worked, just that it transferred and was acknowledged)
+    LIBSD_TIMEOUT = 1, // the SD card did not respond to a command in time
+    LIBSD_INIT_FAILED = 2, // the SD card did not initialize as expected
+    LIBSD_WRITE_FAILED = 3,
+    LIBSD_READ_FAILED = 4
+} LibsdReturnStatus;
+
+/**
  * @brief Enumeration of all SD card commands predefined by standard
  * 
  * Enumeration of both numerical and actual names for SD card SPI commands.
@@ -198,9 +214,9 @@ typedef union {
  * @brief Initialize an SD card using the values in a struct
  * 
  * @param card Pointer to LibsdCard struct for the card
- * @return Response code from SD card on failure, or 0 on success
+ * @return LIBSD_OK on success, LIBSD_INIT_FAILED on failure
  */
-uint8_t libsd_init_card(LibsdCard* card);
+LibsdReturnStatus libsd_init_card(LibsdCard* card);
 
 /**
  * @brief Send a predefined command to the card
@@ -208,8 +224,10 @@ uint8_t libsd_init_card(LibsdCard* card);
  * @param card Struct for the SD card to send the command to
  * @param cmd Struct for the command to be sent
  * @param resp Union to place response into
+ * 
+ * @return LIBSD_OK if the command was sent and a response was received, LIBSD_TIMEOUT if no response within 8 bytes on SPI
  */
-void libsd_send_defined_command(LibsdCard* card, LibsdSpiDefinedCommand* cmd, LibsdSpiCommandResponse* resp);
+LibsdReturnStatus libsd_send_defined_command(LibsdCard* card, LibsdSpiDefinedCommand* cmd, LibsdSpiCommandResponse* resp);
 
 /**
  * @brief Send an application specific command to the card
@@ -217,8 +235,10 @@ void libsd_send_defined_command(LibsdCard* card, LibsdSpiDefinedCommand* cmd, Li
  * @param card Struct for the SD card to send the command to
  * @param cmd Struct for the command to be sent
  * @param resp Union to place the response into
+ * 
+ * @return LIBSD_OK if the command was sent and a response was received, LIBSD_TIMEOUT if no response within 8 bytes on SPI
  */
-void libsd_send_application_command(LibsdCard* card, LibsdSpiApplicationCommand* cmd, LibsdSpiCommandResponse* resp);
+LibsdReturnStatus libsd_send_application_command(LibsdCard* card, LibsdSpiApplicationCommand* cmd, LibsdSpiCommandResponse* resp);
 
 /**
  * @brief Write a block (usually 512 bytes) to the SD card at the given block address
@@ -226,8 +246,10 @@ void libsd_send_application_command(LibsdCard* card, LibsdSpiApplicationCommand*
  * @param card Struct for the SD card to write to
  * @param write_buf Buffer containing data to be written
  * @param len Length of the buffer in bytes
+ * 
+ * @return LIBSD_OK if the command was sent and a response was received, LIBSD_TIMEOUT if no response within 8 bytes on SPI
  */
-void libsd_write_block(LibsdCard* card, uint8_t* write_buf, uint16_t len);
+LibsdReturnStatus libsd_write_block(LibsdCard* card, uint8_t* write_buf, uint16_t len);
 
 /**
  * @brief Read a block (usually 512 bytes) from the SD card at the given block address
@@ -235,7 +257,9 @@ void libsd_write_block(LibsdCard* card, uint8_t* write_buf, uint16_t len);
  * @param card Struct for the SD card to read from
  * @param read_buf Buffer to place the read data in
  * @param len Length of the buffer in bytes
+ * 
+ * @return LIBSD_OK if the command was sent and a response was received, LIBSD_TIMEOUT if no response within 8 bytes on SPI
  */
-void libsd_read_block(LibsdCard* card, uint8_t* read_buf, uint16_t len);
+LibsdReturnStatus libsd_read_block(LibsdCard* card, uint8_t* read_buf, uint16_t len);
 
 #endif
