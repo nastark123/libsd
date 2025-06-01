@@ -51,6 +51,20 @@ typedef struct {
 void libsd_spi_init(LibsdSpi* spi);
 
 /**
+ * @brief Disable the chip select pin, which is used during the initialization routine.
+ * 
+ * @param spi Pointer to a LibsdSpi struct for the SPI interface to disable chip select
+ */
+void libsd_spi_cs_disable(LibsdSpi* spi);
+
+/**
+ * @brief Enable the chip select pin, used during the initialization routine.
+ * 
+ * @param spi Pointer to a LibsdSpi struct for the SPI interface to enable chip select
+ */
+void libsd_spi_cs_enable(LibsdSpi* spi);
+
+/**
  * @brief Write a single byte (8 bits) MSB first across the SPI interface.
  * 
  * @param spi SPI interface to write to

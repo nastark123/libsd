@@ -18,7 +18,77 @@
 #include <libsd/libsd.h>
 
 LibsdReturnStatus libsd_init_card(LibsdCard* card) {
+    // disable the SPI interface's chip select
+    libsd_spi_cs_disable(card->spi);
 
+    // SD cards need 80 clock cycles to complete their initialization routing
+    // write 10 bytes of 0 with chip select disabled to do this
+    for(int i = 0; i < 10; i++) {
+        libsd_spi_write_byte(card->spi, 0);
+    }
+
+    // reenable chip select to begin initialization
+    libsd_spi_cs_enable(card->spi);
+
+    // status returned from commands
+    LibsdReturnStatus status;
+
+    // return from commands
+    LibsdSpiCommandResponse resp;
+
+    // struct for predefined commands to send
+    LibsdSpiDefinedCommand cmd;
+
+    // first command is GO_IDLE_STATE (CMD0)
+    cmd.id = GO_IDLE_STATE;
+    cmd.arg = 0;
+    status = libsd_send_defined_command(card, &cmd, &resp);
+    if(status != LIBSD_OK || resp.resp_r1.resp != 0x01) {
+        return LIBSD_INIT_FAILED;
+    }
+
+    // next command asks the SD card what voltages it supports
+    // according to an online source this is mandatory, despite seeming optional
+    cmd.id = SEND_IF_COND;
+    cmd.arg = 0x1AA;
+    status = libsd_send_defined_command(card, &cmd, &resp);
+    if(status != LIBSD_OK || resp.resp_r7.resp != 0x01) {
+        return LIBSD_INIT_FAILED;
+    }
+
+    // next command is ACMD41 which sets up for high capacity - most modern cards
+    LibsdSpiApplicationCommand acmd;
+    acmd.id = SD_SEND_OP_COND;
+    acmd.arg = 0x40000000;
+    do {
+        status = libsd_send_application_command(card, &acmd, &resp);
+    } while(resp.resp_r1.resp == 0x01 && status == LIBSD_OK);
+
+    if(status != LIBSD_OK) {
+        return LIBSD_INIT_FAILED;
+    }
+
+    // multiple things can happen here
+    // if the response is 0x01, the card is initializing and we need to wait
+    // resend the command
+    // if the response is 0x05, the card is older and uses CMD1 for initialization
+    // TODO - timeout for initialization to avoid infinite loop
+    if(resp.resp_r1.resp == 0x05) {
+        cmd.id = SEND_OP_COND;
+        cmd.arg = 0;
+
+        do {
+            status = libsd_send_defined_command(card, &cmd, &resp);
+        } while(resp.resp_r1.resp == 0x01 && status == LIBSD_OK);
+
+        if(status != LIBSD_OK) {
+            return LIBSD_INIT_FAILED;
+        }
+    }
+
+    // initialization has finished
+    // TODO - add some info about the card to the struct for the user to examine
+    return LIBSD_OK;
 }
 
 LibsdReturnStatus libsd_send_defined_command(LibsdCard* card, LibsdSpiDefinedCommand* cmd, LibsdSpiCommandResponse* resp) {
