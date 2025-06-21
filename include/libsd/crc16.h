@@ -20,8 +20,8 @@
 
 #include <stdint.h>
 
-uint16_t libsd_crc16_calculate_byte(uint8_t crc_last, uint8_t data);
+uint16_t libsd_crc16_calculate_byte(uint16_t crc_last, uint8_t data);
 
-uint16_t libsd_crc16_calculate(uint8_t* data, int len);
+uint16_t libsd_crc16_calculate(uint16_t crc_last, uint8_t* data, int len);
 
 #endif

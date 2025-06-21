@@ -19,7 +19,7 @@
 
 uint16_t crc16_table[256];
 
-uint16_t libsd_crc16_calculate_byte(uint8_t crc_last, uint8_t data) {
+uint16_t libsd_crc16_calculate_byte(uint16_t crc_last, uint8_t data) {
     static uint8_t initialized = 0;
     if(!initialized) {
         initialized = 1;
@@ -36,10 +36,10 @@ uint16_t libsd_crc16_calculate_byte(uint8_t crc_last, uint8_t data) {
     return crc16_table[(data ^ (crc_last << 1)) & 0xFFFFU];
 }
 
-uint16_t libsd_crc16_calculate(uint8_t* data, int len) {
-    uint8_t crc_val = 0;
+uint16_t libsd_crc16_calculate(uint16_t crc_last, uint8_t* data, int len) {
+    uint16_t crc_val = crc_last;
     for(int i = 0; i < len; i++) {
-        crc_val = crc16_calculate_byte(crc_val, data[i]);
+        crc_val = libsd_crc16_calculate_byte(crc_val, data[i]);
     }
 
     return crc_val;

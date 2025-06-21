@@ -42,7 +42,7 @@ uint8_t libsd_crc7_calculate_byte(uint8_t crc_last, uint8_t data) {
 uint8_t libsd_crc7_calculate(uint8_t* data, int len) {
     uint8_t crc_val = 0;
     for(int i = 0; i < len; i++) {
-        crc_val = crc7_calculate_byte(crc_val, data[i]);
+        crc_val = libsd_crc7_calculate_byte(crc_val, data[i]);
     }
 
     return crc_val;

@@ -1,4 +1,4 @@
-pico_sdk_init()
+# pico_sdk_init()
 
 add_executable(rp2040_example main.c)
 
