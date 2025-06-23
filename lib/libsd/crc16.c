@@ -33,7 +33,8 @@ uint16_t libsd_crc16_calculate_byte(uint16_t crc_last, uint8_t data) {
         }
     }
 
-    return crc16_table[(data ^ (crc_last << 1)) & 0xFFFFU];
+    // return crc16_table[(data ^ (crc_last << 1)) & 0xFFFFU];
+    return (crc16_table[(data ^ (crc_last >> 8)) & 0xFFU] ^ (crc_last << 8)) & 0xFFFFU;
 }
 
 uint16_t libsd_crc16_calculate(uint16_t crc_last, uint8_t* data, int len) {

@@ -32,9 +32,9 @@ int main(void) {
     LibsdCard card;
     card.block_size = 512;
 
-    // SPI at 100 kHz on interface 0
+    // SPI at 400 kHz on interface 0
     LibsdSpi spi;
-    spi.freq = 100000;
+    spi.freq = 400000;
     spi.id = 0;
 
     card.spi = &spi;
@@ -51,7 +51,7 @@ int main(void) {
 
     uint8_t tx_buf[512];
     for(int i = 0; i < 512; i++) {
-        tx_buf[i] = i + 1;
+        tx_buf[i] = 2 * (i + 1);
     }
 
     ret = libsd_card_write_block(&card, 0, tx_buf, 512);
@@ -64,6 +64,11 @@ int main(void) {
     ret = libsd_card_read_block(&card, 0, rx_buf, 512);
 
     printf("Past SD card read, return %d\n", ret);
+
+    printf("First 30 elements from read:\n");
+    for(int i = 0; i < 30; i++) {
+        printf("%d\n", rx_buf[i]);
+    }
 
     for(;;) {
         printf("Infinite loop\n");
