@@ -17,9 +17,6 @@
 
 #include <libsd/libsd.h>
 
-// !!! TEMP !!!
-#include <stdio.h>
-
 // Constant definitions
 const uint8_t LIBSD_START_BLOCK_SINGLE = 0xFE;
 
@@ -53,8 +50,6 @@ LibsdReturnStatus libsd_card_init(LibsdCard* card) {
     cmd.id = GO_IDLE_STATE;
     cmd.arg = 0;
     status = libsd_card_send_defined_command(card, &cmd, &resp);
-    printf("Status from CMD0: %d\n", status);
-    printf("Response from CMD0: %d\n", resp.resp_r1.resp);
     if(status != LIBSD_OK || resp.resp_r1.resp != 0x01) {
         return LIBSD_INIT_FAILED;
     }
@@ -64,7 +59,6 @@ LibsdReturnStatus libsd_card_init(LibsdCard* card) {
     cmd.id = SEND_IF_COND;
     cmd.arg = 0x1AA;
     status = libsd_card_send_defined_command(card, &cmd, &resp);
-    printf("Response from CMD8: %d\n", resp.resp_r7.resp);
     if(status != LIBSD_OK || resp.resp_r7.resp != 0x01) {
         return LIBSD_INIT_FAILED;
     }
@@ -75,8 +69,6 @@ LibsdReturnStatus libsd_card_init(LibsdCard* card) {
     acmd.arg = 0x40000000;
     do {
         status = libsd_card_send_application_command(card, &acmd, &resp);
-        printf("Response from ACMD41: %d\n", resp.resp_r1.resp);
-        printf("Status from ACMD41: %d\n", status);
     } while(resp.resp_r1.resp == 0x01 && status == LIBSD_OK);
 
     if(status != LIBSD_OK) {
@@ -94,7 +86,6 @@ LibsdReturnStatus libsd_card_init(LibsdCard* card) {
 
         do {
             status = libsd_card_send_defined_command(card, &cmd, &resp);
-            printf("Response from CMD1: %d\n", resp.resp_r1.resp);
         } while(resp.resp_r1.resp == 0x01 && status == LIBSD_OK);
 
         if(status != LIBSD_OK) {
@@ -123,11 +114,6 @@ LibsdReturnStatus libsd_card_send_defined_command(LibsdCard* card, LibsdSpiDefin
 
     cmd_buf[5] = (crc << 1) | 0x01;
 
-    printf("Command buffer:\n");
-    for(int i = 0; i < 6; i++) {
-        printf("%d\n", cmd_buf[i]);
-    }
-
     // send to command buffer across the SPI interface
     libsd_spi_write_buf(card->spi, cmd_buf, 6);
 
@@ -135,7 +121,6 @@ LibsdReturnStatus libsd_card_send_defined_command(LibsdCard* card, LibsdSpiDefin
     // it can take anywhere from 0 to 8 clock cycles for a response according to the specification
     for(int i = 0; i <= 8; i++) {
         libsd_spi_read_write_byte(card->spi, 0xFF, &read_byte);
-        printf("Read byte: %d\n", read_byte);
         // the SD card will hold the line high for busy, and the MSB of any response is 0, so check for that
         if((read_byte & 0x80) == 0x00) {
             break;
@@ -350,10 +335,6 @@ LibsdReturnStatus libsd_card_read_block(LibsdCard* card, uint32_t addr, uint8_t*
     received_crc |= crc_buf[1];
 
     uint16_t calc_crc = libsd_crc16_calculate(0, read_buf, card->block_size);
-
-    printf("CRC Buffer 0: %d, 1: %d\n", crc_buf[0], crc_buf[1]);
-    printf("Received CRC: %d\n", received_crc);
-    printf("Calculated CRC: %d\n", calc_crc);
 
     if(received_crc != calc_crc) {
         return LIBSD_CRC_ERROR;
