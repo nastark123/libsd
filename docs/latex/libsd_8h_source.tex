@@ -1,0 +1,191 @@
+\doxysection{libsd.\+h}
+\hypertarget{libsd_8h_source}{}\label{libsd_8h_source}\index{libsd.h@{libsd.h}}
+\mbox{\hyperlink{libsd_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ 2025\ Nathan\ Stark}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Licensed\ under\ the\ Apache\ License,\ Version\ 2.0\ (the\ "{}License"{});}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ you\ may\ not\ use\ this\ file\ except\ in\ compliance\ with\ the\ License.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ You\ may\ obtain\ a\ copy\ of\ the\ License\ at}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ \ \ \ \ http://www.apache.org/licenses/LICENSE-\/2.0}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ Unless\ required\ by\ applicable\ law\ or\ agreed\ to\ in\ writing,\ software}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ distributed\ under\ the\ License\ is\ distributed\ on\ an\ "{}AS\ IS"{}\ BASIS,}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ WITHOUT\ WARRANTIES\ OR\ CONDITIONS\ OF\ ANY\ KIND,\ either\ express\ or\ implied.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ See\ the\ License\ for\ the\ specific\ language\ governing\ permissions\ and}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ limitations\ under\ the\ License.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ ******************************************************************************/}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ @file\ libsd.h}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ @brief\ This\ file\ contains\ the\ functions\ provided\ to\ the\ user\ by\ the\ library}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ for\ interacting\ with\ the\ SD\ card\ (reading,\ writing,\ etc)}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ ******************************************************************************/}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#ifndef\ LIBSD\_H}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ LIBSD\_H}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{spi_8h}{libsd/spi.h}}>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{crc7_8h}{libsd/crc7.h}}>}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{crc16_8h}{libsd/crc16.h}}>}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ uint8\_t\ \mbox{\hyperlink{libsd_8c_afe126337fd5a9407c4216459506fb0bf}{LIBSD\_START\_BLOCK\_SINGLE}};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ uint8\_t\ \mbox{\hyperlink{libsd_8c_a6cbbba235c8f9237b7885c3271e401a2}{LIBSD\_START\_BLOCK\_MULTIPLE}};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ uint8\_t\ \mbox{\hyperlink{libsd_8c_ae9d6bd3965ee02b29be0566ca5a40433}{LIBSD\_STOP\_BLOCK\_MULTIPLE}};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}}\ =\ 0,\ \textcolor{comment}{//\ function\ completed\ successfully,\ no\ issues\ (does\ not\ guarantee\ command\ worked,\ just\ that\ it\ transferred\ and\ was\ acknowledged)}}
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a501fd744f95cf0d30eb43f09e4ab5fd6}{LIBSD\_TIMEOUT}}\ =\ 1,\ \textcolor{comment}{//\ the\ SD\ card\ did\ not\ respond\ to\ a\ command\ in\ time}}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a985ce5a0dd999b7ba42c3739706ce911}{LIBSD\_INIT\_FAILED}}\ =\ 2,\ \textcolor{comment}{//\ the\ SD\ card\ did\ not\ initialize\ as\ expected}}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a0912ae679e57403dfc8b7b25d9af2aef}{LIBSD\_WRITE\_FAILED}}\ =\ 3,\ \textcolor{comment}{//\ the\ write\ to\ the\ card\ failed}}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a7481ed2743af076052eea8bd1507bdb5}{LIBSD\_READ\_FAILED}}\ =\ 4,\ \textcolor{comment}{//\ the\ read\ from\ the\ card\ failed}}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a0aadb7478c96bd88f0587cf94f96ede8}{LIBSD\_BUF\_TOO\_SMALL}}\ =\ 5,\ \textcolor{comment}{//\ the\ buffer\ supplied\ is\ smaller\ than\ a\ block}}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a0f82db21f4263d8d617d0f0fc3ea9bd0}{LIBSD\_BUF\_TOO\_LARGE}}\ =\ 6,\ \textcolor{comment}{//\ the\ buffer\ supplied\ is\ larger\ than\ a\ block\ (only\ a\ problem\ for\ writes)}}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295afd4e1e73c876c7288df868906b8a0877}{LIBSD\_CRC\_ERROR}}\ =\ 7}
+\DoxyCodeLine{00065\ \}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Numerical\ names\ for\ commands}}
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a36541b415ae5967751b3c72878f80aa8}{CMD0}}\ =\ 0,}
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a47ee3e681c20ff5c495493e77ca34368}{CMD1}}\ =\ 1,}
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a108117a364ab0acbb9f98c884a83d4de}{CMD6}}\ =\ 6,}
+\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a651ee13eedad94e8b3e08c5a666fb820}{CMD8}}\ =\ 8,}
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a4104f864a4e56683eecd7e14baead027}{CMD9}}\ =\ 9,}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a18484c198b2d973707932d615e2e7362}{CMD10}}\ =\ 10,}
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5ab3eb4943342fc8d4760b87ae97f8d259}{CMD12}}\ =\ 12,}
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5adb3d8777afe922d38ef02e8dcfeb8420}{CMD13}}\ =\ 13,}
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5aac87bb1842300e8cfb83fda7c72abcde}{CMD16}}\ =\ 16,}
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a95702a46b620fa7fd0c3a9393e81dae2}{CMD17}}\ =\ 17,}
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a6208383a5bd0425b4b2095449bb22196}{CMD18}}\ =\ 18,}
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a942069fd9af24fe9f27ac88c02bd4dc0}{CMD24}}\ =\ 24,}
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a102d8de2cd23f65f8be2c992fd3bfc29}{CMD25}}\ =\ 25,}
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a92b4e0176704b4f8f8936fc9b0c6ad63}{CMD27}}\ =\ 27,}
+\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a0b50c274986c491d4dbc30c7a3da1966}{CMD28}}\ =\ 28,}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5abba191301ca9cded3815c3b7f3d69371}{CMD29}}\ =\ 29,}
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a63cf7dbbdc07b9798eda00909eae58a9}{CMD30}}\ =\ 30,}
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5af3c4af53adc6cf1f814a936fe515334e}{CMD32}}\ =\ 32,}
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a61970fcf2b514e2a3087f397536e81b5}{CMD33}}\ =\ 33,}
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a8295cc520ba543348e74d9cec38438d4}{CMD38}}\ =\ 38,}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a07e56339baf8c13d18d81f5859a31baa}{CMD42}}\ =\ 42,}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a36edfb2a83221c8c3a3ad0d84072200d}{CMD55}}\ =\ 55,}
+\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a8aa988b277f52c09fbaf39740f33867d}{CMD56}}\ =\ 56,}
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5acb344739b2733fe7ef0c8f28a92896d1}{CMD58}}\ =\ 58,}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a7aeecfde4608a4ae1b7afcb3d37349d8}{CMD59}}\ =\ 59,}
+\DoxyCodeLine{00102\ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Actual\ names\ for\ commands}}
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a6f824aa2a760266a6bb66287abfaf2df}{GO\_IDLE\_STATE}}\ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a36541b415ae5967751b3c72878f80aa8}{CMD0}},}
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a07d91a17024637fc003cce13a0e58849}{SEND\_OP\_COND}}\ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a47ee3e681c20ff5c495493e77ca34368}{CMD1}},}
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a5862474e029edce6895fd17571933822}{SWITCH\_FUNC}}\ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a108117a364ab0acbb9f98c884a83d4de}{CMD6}},}
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a54ea42ae5cc87fc72f0941e48828d34d}{SEND\_IF\_COND}}\ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a651ee13eedad94e8b3e08c5a666fb820}{CMD8}},}
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a32550ff14785bd6e01de42951021c8ff}{SEND\_CSD}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a4104f864a4e56683eecd7e14baead027}{CMD9}},}
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a1d6820714043c4791409620c718a74fb}{SEND\_CID}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a18484c198b2d973707932d615e2e7362}{CMD10}},}
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a7d043a4f7c42bd6aeb8dfc7574127565}{STOP\_TRANSMISSION}}\ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5ab3eb4943342fc8d4760b87ae97f8d259}{CMD12}},}
+\DoxyCodeLine{00111\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5ae88af817feffec91cec7143bd5a4cad5}{SEND\_STATUS}}\ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5adb3d8777afe922d38ef02e8dcfeb8420}{CMD13}},}
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a3f01cc7b4d0989ccec9edeeb264513d8}{SET\_BLOCKLEN}}\ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5aac87bb1842300e8cfb83fda7c72abcde}{CMD16}},}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a981471a896d209c94bcb967e9eda2538}{READ\_SINGLE\_BLOCK}}\ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a95702a46b620fa7fd0c3a9393e81dae2}{CMD17}},}
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5aad30368720ac8926900f9479948a7f48}{READ\_MULTIPLE\_BLOCK}}\ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a6208383a5bd0425b4b2095449bb22196}{CMD18}},}
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a577bfdd5ef3f3d9b50bdecbd7cf04b9e}{WRITE\_BLOCK}}\ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a942069fd9af24fe9f27ac88c02bd4dc0}{CMD24}},}
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a28f9f0c4e8d6e0d25e4c48aab4fc7b8b}{WRITE\_MULTIPLE\_BLOCK}}\ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a102d8de2cd23f65f8be2c992fd3bfc29}{CMD25}},}
+\DoxyCodeLine{00117\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5ad08a859a9e416a9ad199e7a5ab5b9563}{PROGRAM\_CSD}}\ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a92b4e0176704b4f8f8936fc9b0c6ad63}{CMD27}},}
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a608c3c2839cdbfcb59a5471e5e738485}{SET\_WRITE\_PROT}}\ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a0b50c274986c491d4dbc30c7a3da1966}{CMD28}},}
+\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5ab16bb2db0dfd470936d304fa936db333}{CLR\_WRITE\_PROT}}\ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5abba191301ca9cded3815c3b7f3d69371}{CMD29}},}
+\DoxyCodeLine{00120\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5ad02b96ec3dceec611b68d602b190d29d}{SEND\_WRITE\_PROT}}\ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a63cf7dbbdc07b9798eda00909eae58a9}{CMD30}},}
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5acbcdcead4af7b991e8cc50d96da7627a}{ERASE\_WR\_BLK\_START\_ADDR}}\ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5af3c4af53adc6cf1f814a936fe515334e}{CMD32}},}
+\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a0074cb30d79c5c61da8e9a4cdbc74730}{ERASE\_WR\_BLK\_END\_ADDR}}\ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a61970fcf2b514e2a3087f397536e81b5}{CMD33}},}
+\DoxyCodeLine{00123\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a33da92285188399f32dced50082643a2}{ERASE}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a8295cc520ba543348e74d9cec38438d4}{CMD38}},}
+\DoxyCodeLine{00124\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a33a3402e588be6c7abed413c6cbc9605}{LOCK\_UNLOCK}}\ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a07e56339baf8c13d18d81f5859a31baa}{CMD42}},}
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5ab1f86f7ebbfab11df1eb34efbaa06205}{APP\_CMD}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a36edfb2a83221c8c3a3ad0d84072200d}{CMD55}},}
+\DoxyCodeLine{00126\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5ab5aabb906a4d06498b5a5903d84335cd}{GEN\_CMD}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a8aa988b277f52c09fbaf39740f33867d}{CMD56}},}
+\DoxyCodeLine{00127\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a4bc59666fe5dfd64bd4b1ef6f9fea31a}{READ\_OCR}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5acb344739b2733fe7ef0c8f28a92896d1}{CMD58}},}
+\DoxyCodeLine{00128\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a3b33578f9d7eec47f767284c51165ed2}{CRC\_ON\_OFF}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a7aeecfde4608a4ae1b7afcb3d37349d8}{CMD59}}}
+\DoxyCodeLine{00129\ \}\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5}{LibsdSpiDefinedCommandId}};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00139\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//\ Numerical\ names\ for\ commands}}
+\DoxyCodeLine{00141\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a1d6f66f881132e0032676f3d0fbf27ad}{ACMD13}}\ =\ 13,}
+\DoxyCodeLine{00142\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a9d6abfe61e876e33a11cda6d3a3d5fc8}{ACMD18}}\ =\ 18,}
+\DoxyCodeLine{00143\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a50d4c6c3bc11d3ec7a7c774fc861097e}{ACMD22}}\ =\ 22,}
+\DoxyCodeLine{00144\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37aea6346eee11967d310f37aed7f3dd402}{ACMD23}}\ =\ 23,}
+\DoxyCodeLine{00145\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a0e8bf0dfb18e3c69408619655d1eee40}{ACMD25}}\ =\ 25,}
+\DoxyCodeLine{00146\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a9dd2c01a18fdd5e08694a5c38707c996}{ACMD26}}\ =\ 26,}
+\DoxyCodeLine{00147\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37aee288bc9b1c18d7bed1ac6d8e4b734c3}{ACMD38}}\ =\ 38,}
+\DoxyCodeLine{00148\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a2989f2b85bef73f9c75962759a0f997a}{ACMD41}}\ =\ 41,}
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a403065a1f23ce526cde552e65cb232a0}{ACMD42}}\ =\ 42,}
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a7314dd7d63beccdab7755fb5221c6319}{ACMD43}}\ =\ 43,}
+\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a222d33f52cdb0919c173c226d6950698}{ACMD44}}\ =\ 44,}
+\DoxyCodeLine{00152\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a965cfccfb4e6081a9a086ae0ba675f73}{ACMD45}}\ =\ 45,}
+\DoxyCodeLine{00153\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a2456a27247ad4573895e76bc98c0bec2}{ACMD46}}\ =\ 46,}
+\DoxyCodeLine{00154\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37aa49a03171687ec9c06ca974e3fae2602}{ACMD47}}\ =\ 47,}
+\DoxyCodeLine{00155\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a976a1cb6e184900b486ac1755db1d6fa}{ACMD48}}\ =\ 48,}
+\DoxyCodeLine{00156\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37abb11ccc5de7b743567b5e0c72f92f381}{ACMD49}}\ =\ 49,}
+\DoxyCodeLine{00157\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a76d3f43ccd3ca5da2bd824e0a2e325a2}{ACMD51}}\ =\ 51,}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{comment}{//\ Actual\ names\ for\ commands}}
+\DoxyCodeLine{00160\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a8fe7ff3a519c58d8ddc65c517783644f}{SD\_STATUS}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a1d6f66f881132e0032676f3d0fbf27ad}{ACMD13}},}
+\DoxyCodeLine{00161\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a5c8da97b35e71eeb4e92a45ea5402806}{SEND\_NUM\_WR\_BLOCKS}}\ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a50d4c6c3bc11d3ec7a7c774fc861097e}{ACMD22}},}
+\DoxyCodeLine{00162\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a233a870eb100c403e0d6de365b3d4c05}{SET\_WR\_BLK\_ERASE\_COUNT}}\ =\ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37aea6346eee11967d310f37aed7f3dd402}{ACMD23}},}
+\DoxyCodeLine{00163\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37af53642a5b99dbca8a7bdf0135cdc5e77}{SD\_SEND\_OP\_COND}}\ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a2989f2b85bef73f9c75962759a0f997a}{ACMD41}},}
+\DoxyCodeLine{00164\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a5fce58ca467402785733125df603648d}{SET\_CLR\_CARD\_DETECT}}\ \ \ \ =\ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a403065a1f23ce526cde552e65cb232a0}{ACMD42}},}
+\DoxyCodeLine{00165\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a33d8886113d06895950e6801a7fa5bd9}{SEND\_SCR}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a76d3f43ccd3ca5da2bd824e0a2e325a2}{ACMD51}}}
+\DoxyCodeLine{00166\ \}\ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37}{LibsdSpiApplicationCommandId}};}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00171\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00172\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi}{LibsdSpi}}*\ \mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}};\ \textcolor{comment}{//\ SPI\ interface\ connected\ to\ SD\ card}}
+\DoxyCodeLine{00173\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_libsd_card_abeab263538de0bda9f7b09161c9eecdc}{block\_size}};\ \textcolor{comment}{//\ size\ of\ the\ block\ on\ the\ SD\ card,\ usually\ 512\ bytes}}
+\DoxyCodeLine{00174\ \}\ \mbox{\hyperlink{struct_libsd_card}{LibsdCard}};}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00179\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00180\ \ \ \ \ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5}{LibsdSpiDefinedCommandId}}\ \mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}};\ \textcolor{comment}{//\ ID\ for\ command,\ see\ above\ enum}}
+\DoxyCodeLine{00181\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}};\ \textcolor{comment}{//\ Some\ commands\ take\ a\ 32\ bit\ argument,\ if\ yours\ doesn't,\ set\ to\ 0}}
+\DoxyCodeLine{00182\ \}\ \mbox{\hyperlink{struct_libsd_spi_defined_command}{LibsdSpiDefinedCommand}};}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00187\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00188\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37}{LibsdSpiApplicationCommandId}}\ \mbox{\hyperlink{struct_libsd_spi_application_command_ad7e9efd0deb50d3b31a33d92d05f5d3b}{id}};\ \textcolor{comment}{//\ ID\ for\ command,\ see\ above\ enum}}
+\DoxyCodeLine{00189\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_libsd_spi_application_command_a05ef0db87c7c10d93b12f281d368be8a}{arg}};\ \textcolor{comment}{//\ Some\ commands\ take\ a\ 32\ bit\ argument,\ if\ yours\ doesn't\ set\ to\ 0}}
+\DoxyCodeLine{00190\ \}\ \mbox{\hyperlink{struct_libsd_spi_application_command}{LibsdSpiApplicationCommand}};}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00195\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00196\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_libsd_spi_command_response_r1_abbf035f40ee8c3f20d6bd8c0e5c959c2}{resp}};}
+\DoxyCodeLine{00197\ \}\ \mbox{\hyperlink{struct_libsd_spi_command_response_r1}{LibsdSpiCommandResponseR1}};}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00202\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00203\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_libsd_spi_command_response_r2_ab310b3e1150523205d5fb1d6892bc70a}{resp}};}
+\DoxyCodeLine{00204\ \}\ \mbox{\hyperlink{struct_libsd_spi_command_response_r2}{LibsdSpiCommandResponseR2}};}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00209\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00210\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_libsd_spi_command_response_r3_a0d6e64ba43c84a00cd7870ce148267bc}{resp}};}
+\DoxyCodeLine{00211\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_libsd_spi_command_response_r3_adbb43155674764664f4bae6da67a5fe9}{extra}};}
+\DoxyCodeLine{00212\ \}\ \mbox{\hyperlink{struct_libsd_spi_command_response_r3}{LibsdSpiCommandResponseR3}};}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00217\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00218\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_libsd_spi_command_response_r7_a487b4aac9e460bb8d17dea87c03b173f}{resp}};}
+\DoxyCodeLine{00219\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_libsd_spi_command_response_r7_ad18875ac3f248dc3dfb5e2add63a632f}{extra}};}
+\DoxyCodeLine{00220\ \}\ \mbox{\hyperlink{struct_libsd_spi_command_response_r7}{LibsdSpiCommandResponseR7}};}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00225\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{00226\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi_command_response_r1}{LibsdSpiCommandResponseR1}}\ \mbox{\hyperlink{union_libsd_spi_command_response_a7fbe9577c9bfbbb3d80990df2d213c2d}{resp\_r1}};}
+\DoxyCodeLine{00227\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi_command_response_r2}{LibsdSpiCommandResponseR2}}\ \mbox{\hyperlink{union_libsd_spi_command_response_a2dc9b1f839595a38b6d79bbae8fd65db}{resp\_r2}};}
+\DoxyCodeLine{00228\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi_command_response_r3}{LibsdSpiCommandResponseR3}}\ \mbox{\hyperlink{union_libsd_spi_command_response_a6aae5ced66e6a6b3214b945cc615a0d3}{resp\_r3}};}
+\DoxyCodeLine{00229\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi_command_response_r7}{LibsdSpiCommandResponseR7}}\ \mbox{\hyperlink{union_libsd_spi_command_response_a0a9bb20080821a17ecb48366bc9ced45}{resp\_r7}};}
+\DoxyCodeLine{00230\ \}\ \mbox{\hyperlink{union_libsd_spi_command_response}{LibsdSpiCommandResponse}};}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00238\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}}\ \mbox{\hyperlink{libsd_8h_af3cbbaf29e03d8980ad91628e8e4eabc}{libsd\_card\_init}}(\mbox{\hyperlink{struct_libsd_card}{LibsdCard}}*\ card);}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00249\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}}\ \mbox{\hyperlink{libsd_8h_ab0298722c83047fc1c9b40c1d5845c00}{libsd\_card\_send\_defined\_command}}(\mbox{\hyperlink{struct_libsd_card}{LibsdCard}}*\ card,\ \mbox{\hyperlink{struct_libsd_spi_defined_command}{LibsdSpiDefinedCommand}}*\ cmd,\ \mbox{\hyperlink{union_libsd_spi_command_response}{LibsdSpiCommandResponse}}*\ resp);}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00260\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}}\ \mbox{\hyperlink{libsd_8h_aa9c46209a3939d308325a0ab7a2010b6}{libsd\_card\_send\_application\_command}}(\mbox{\hyperlink{struct_libsd_card}{LibsdCard}}*\ card,\ \mbox{\hyperlink{struct_libsd_spi_application_command}{LibsdSpiApplicationCommand}}*\ cmd,\ \mbox{\hyperlink{union_libsd_spi_command_response}{LibsdSpiCommandResponse}}*\ resp);}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00272\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}}\ \mbox{\hyperlink{libsd_8h_a57d87947ed864f3fa837daf44fc2b9ac}{libsd\_card\_write\_block}}(\mbox{\hyperlink{struct_libsd_card}{LibsdCard}}*\ card,\ uint32\_t\ addr,\ uint8\_t*\ write\_buf,\ uint16\_t\ len);}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00284\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}}\ \mbox{\hyperlink{libsd_8h_ac6aeda3ef42fef5fc5f7e302ec894718}{libsd\_card\_read\_block}}(\mbox{\hyperlink{struct_libsd_card}{LibsdCard}}*\ card,\ uint32\_t\ addr,\ uint8\_t*\ read\_buf,\ uint16\_t\ len);}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,97 @@
+\doxysection{crc7.\+c File Reference}
+\hypertarget{crc7_8c}{}\label{crc7_8c}\index{crc7.c@{crc7.c}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{crc7_8c_a6b936a16cb56b19f286e5f6543ffc4c5}{libsd\+\_\+crc7\+\_\+calculate\+\_\+byte}} (uint8\+\_\+t crc\+\_\+last, uint8\+\_\+t data)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{crc7_8c_a0ff6f9ff52dd297a25ec5926c7e1b24d}{libsd\+\_\+crc7\+\_\+calculate}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, int len)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const uint8\+\_\+t \mbox{\hyperlink{crc7_8c_a86be51ca7ef6bac9f1cbd912f2046bd0}{crc7\+\_\+table}} \mbox{[}256\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{crc7_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{crc7_8c_a0ff6f9ff52dd297a25ec5926c7e1b24d}\index{crc7.c@{crc7.c}!libsd\_crc7\_calculate@{libsd\_crc7\_calculate}}
+\index{libsd\_crc7\_calculate@{libsd\_crc7\_calculate}!crc7.c@{crc7.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_crc7\_calculate()}{libsd\_crc7\_calculate()}}
+{\footnotesize\ttfamily \label{crc7_8c_a0ff6f9ff52dd297a25ec5926c7e1b24d} 
+uint8\+\_\+t libsd\+\_\+crc7\+\_\+calculate (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{int}]{len}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ uint8\_t\ crc\_val\ =\ 0;}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ len;\ i++)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ crc\_val\ =\ \mbox{\hyperlink{crc7_8c_a6b936a16cb56b19f286e5f6543ffc4c5}{libsd\_crc7\_calculate\_byte}}(crc\_val,\ data[i]);}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ crc\_val;}
+\DoxyCodeLine{00064\ \}}
+
+\end{DoxyCode}
+\Hypertarget{crc7_8c_a6b936a16cb56b19f286e5f6543ffc4c5}\index{crc7.c@{crc7.c}!libsd\_crc7\_calculate\_byte@{libsd\_crc7\_calculate\_byte}}
+\index{libsd\_crc7\_calculate\_byte@{libsd\_crc7\_calculate\_byte}!crc7.c@{crc7.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_crc7\_calculate\_byte()}{libsd\_crc7\_calculate\_byte()}}
+{\footnotesize\ttfamily \label{crc7_8c_a6b936a16cb56b19f286e5f6543ffc4c5} 
+uint8\+\_\+t libsd\+\_\+crc7\+\_\+calculate\+\_\+byte (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{crc\+\_\+last}{, }\item[{uint8\+\_\+t}]{data}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{crc7_8c_a86be51ca7ef6bac9f1cbd912f2046bd0}{crc7\_table}}[(data\ \string^\ (crc\_last\ <<\ 1))\ \&\ 0xFFU];}
+\DoxyCodeLine{00055\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-var-members}
+\Hypertarget{crc7_8c_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{crc7_8c_a86be51ca7ef6bac9f1cbd912f2046bd0}\index{crc7.c@{crc7.c}!crc7\_table@{crc7\_table}}
+\index{crc7\_table@{crc7\_table}!crc7.c@{crc7.c}}
+\doxysubsubsection{\texorpdfstring{crc7\_table}{crc7\_table}}
+{\footnotesize\ttfamily \label{crc7_8c_a86be51ca7ef6bac9f1cbd912f2046bd0} 
+const uint8\+\_\+t crc7\+\_\+table\mbox{[}256\mbox{]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{0x00,\ 0x09,\ 0x12,\ 0x1B,\ 0x24,\ 0x2D,\ 0x36,\ 0x3F,}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x48,\ 0x41,\ 0x5A,\ 0x53,\ 0x6C,\ 0x65,\ 0x7E,\ 0x77,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x19,\ 0x10,\ 0x0B,\ 0x02,\ 0x3D,\ 0x34,\ 0x2F,\ 0x26,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x51,\ 0x58,\ 0x43,\ 0x4A,\ 0x75,\ 0x7C,\ 0x67,\ 0x6E,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x32,\ 0x3B,\ 0x20,\ 0x29,\ 0x16,\ 0x1F,\ 0x04,\ 0x0D,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x7A,\ 0x73,\ 0x68,\ 0x61,\ 0x5E,\ 0x57,\ 0x4C,\ 0x45,}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x2B,\ 0x22,\ 0x39,\ 0x30,\ 0x0F,\ 0x06,\ 0x1D,\ 0x14,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x63,\ 0x6A,\ 0x71,\ 0x78,\ 0x47,\ 0x4E,\ 0x55,\ 0x5C,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x64,\ 0x6D,\ 0x76,\ 0x7F,\ 0x40,\ 0x49,\ 0x52,\ 0x5B,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x2C,\ 0x25,\ 0x3E,\ 0x37,\ 0x08,\ 0x01,\ 0x1A,\ 0x13,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x7D,\ 0x74,\ 0x6F,\ 0x66,\ 0x59,\ 0x50,\ 0x4B,\ 0x42,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x35,\ 0x3C,\ 0x27,\ 0x2E,\ 0x11,\ 0x18,\ 0x03,\ 0x0A,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x56,\ 0x5F,\ 0x44,\ 0x4D,\ 0x72,\ 0x7B,\ 0x60,\ 0x69,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x1E,\ 0x17,\ 0x0C,\ 0x05,\ 0x3A,\ 0x33,\ 0x28,\ 0x21,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x4F,\ 0x46,\ 0x5D,\ 0x54,\ 0x6B,\ 0x62,\ 0x79,\ 0x70,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x07,\ 0x0E,\ 0x15,\ 0x1C,\ 0x23,\ 0x2A,\ 0x31,\ 0x38,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x41,\ 0x48,\ 0x53,\ 0x5A,\ 0x65,\ 0x6C,\ 0x77,\ 0x7E,}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x09,\ 0x00,\ 0x1B,\ 0x12,\ 0x2D,\ 0x24,\ 0x3F,\ 0x36,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x58,\ 0x51,\ 0x4A,\ 0x43,\ 0x7C,\ 0x75,\ 0x6E,\ 0x67,}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x10,\ 0x19,\ 0x02,\ 0x0B,\ 0x34,\ 0x3D,\ 0x26,\ 0x2F,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x73,\ 0x7A,\ 0x61,\ 0x68,\ 0x57,\ 0x5E,\ 0x45,\ 0x4C,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x3B,\ 0x32,\ 0x29,\ 0x20,\ 0x1F,\ 0x16,\ 0x0D,\ 0x04,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x6A,\ 0x63,\ 0x78,\ 0x71,\ 0x4E,\ 0x47,\ 0x5C,\ 0x55,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x22,\ 0x2B,\ 0x30,\ 0x39,\ 0x06,\ 0x0F,\ 0x14,\ 0x1D,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x25,\ 0x2C,\ 0x37,\ 0x3E,\ 0x01,\ 0x08,\ 0x13,\ 0x1A,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x6D,\ 0x64,\ 0x7F,\ 0x76,\ 0x49,\ 0x40,\ 0x5B,\ 0x52,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x3C,\ 0x35,\ 0x2E,\ 0x27,\ 0x18,\ 0x11,\ 0x0A,\ 0x03,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x74,\ 0x7D,\ 0x66,\ 0x6F,\ 0x50,\ 0x59,\ 0x42,\ 0x4B,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x17,\ 0x1E,\ 0x05,\ 0x0C,\ 0x33,\ 0x3A,\ 0x21,\ 0x28,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x5F,\ 0x56,\ 0x4D,\ 0x44,\ 0x7B,\ 0x72,\ 0x69,\ 0x60,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0E,\ 0x07,\ 0x1C,\ 0x15,\ 0x2A,\ 0x23,\ 0x38,\ 0x31,}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x46,\ 0x4F,\ 0x54,\ 0x5D,\ 0x62,\ 0x6B,\ 0x70,\ 0x79\};}
+
+\end{DoxyCode}

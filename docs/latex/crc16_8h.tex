@@ -1,0 +1,45 @@
+\doxysection{crc16.\+h File Reference}
+\hypertarget{crc16_8h}{}\label{crc16_8h}\index{crc16.h@{crc16.h}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{crc16_8h_ac976969d008e803bc752b5a00ce9b8f3}{libsd\+\_\+crc16\+\_\+calculate\+\_\+byte}} (uint16\+\_\+t crc\+\_\+last, uint8\+\_\+t data)
+\item 
+uint16\+\_\+t \mbox{\hyperlink{crc16_8h_ac4532ed85743133f4b4ad80869c68458}{libsd\+\_\+crc16\+\_\+calculate}} (uint16\+\_\+t crc\+\_\+last, uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, int len)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{crc16_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{crc16_8h_ac4532ed85743133f4b4ad80869c68458}\index{crc16.h@{crc16.h}!libsd\_crc16\_calculate@{libsd\_crc16\_calculate}}
+\index{libsd\_crc16\_calculate@{libsd\_crc16\_calculate}!crc16.h@{crc16.h}}
+\doxysubsubsection{\texorpdfstring{libsd\_crc16\_calculate()}{libsd\_crc16\_calculate()}}
+{\footnotesize\ttfamily \label{crc16_8h_ac4532ed85743133f4b4ad80869c68458} 
+uint16\+\_\+t libsd\+\_\+crc16\+\_\+calculate (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{crc\+\_\+last}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{int}]{len}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ uint16\_t\ crc\_val\ =\ crc\_last;}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ len;\ i++)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ crc\_val\ =\ \mbox{\hyperlink{crc16_8c_ac976969d008e803bc752b5a00ce9b8f3}{libsd\_crc16\_calculate\_byte}}(crc\_val,\ data[i]);}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ crc\_val;}
+\DoxyCodeLine{00064\ \}}
+
+\end{DoxyCode}
+\Hypertarget{crc16_8h_ac976969d008e803bc752b5a00ce9b8f3}\index{crc16.h@{crc16.h}!libsd\_crc16\_calculate\_byte@{libsd\_crc16\_calculate\_byte}}
+\index{libsd\_crc16\_calculate\_byte@{libsd\_crc16\_calculate\_byte}!crc16.h@{crc16.h}}
+\doxysubsubsection{\texorpdfstring{libsd\_crc16\_calculate\_byte()}{libsd\_crc16\_calculate\_byte()}}
+{\footnotesize\ttfamily \label{crc16_8h_ac976969d008e803bc752b5a00ce9b8f3} 
+uint16\+\_\+t libsd\+\_\+crc16\+\_\+calculate\+\_\+byte (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{crc\+\_\+last}{, }\item[{uint8\+\_\+t}]{data}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{crc16_8c_a28a0c50396ed66bb2fd1e3cf9ff28e88}{crc16\_table}}[(data\ \string^\ (crc\_last\ >>\ 8))\ \&\ 0xFFU]\ \string^\ (crc\_last\ <<\ 8))\ \&\ 0xFFFFU;}
+\DoxyCodeLine{00055\ \}}
+
+\end{DoxyCode}
