@@ -1,0 +1,57 @@
+\doxysection{spi.\+h}
+\hypertarget{spi_8h_source}{}\label{spi_8h_source}\index{spi.h@{spi.h}}
+\mbox{\hyperlink{spi_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Copyright\ 2025\ Nathan\ Stark}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Licensed\ under\ the\ Apache\ License,\ Version\ 2.0\ (the\ "{}License"{});}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ you\ may\ not\ use\ this\ file\ except\ in\ compliance\ with\ the\ License.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ You\ may\ obtain\ a\ copy\ of\ the\ License\ at}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ \ \ \ \ http://www.apache.org/licenses/LICENSE-\/2.0}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ Unless\ required\ by\ applicable\ law\ or\ agreed\ to\ in\ writing,\ software}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ distributed\ under\ the\ License\ is\ distributed\ on\ an\ "{}AS\ IS"{}\ BASIS,}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ WITHOUT\ WARRANTIES\ OR\ CONDITIONS\ OF\ ANY\ KIND,\ either\ express\ or\ implied.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ See\ the\ License\ for\ the\ specific\ language\ governing\ permissions\ and}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ limitations\ under\ the\ License.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ ******************************************************************************/}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ This\ file\ contains\ function\ prototypes\ for\ various\ SPI\ functionality\ that\ the}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ library\ depends\ on\ to\ interact\ with\ the\ SD\ card.\ \ Simple\ implementations\ are}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ already\ available\ under\ lib/spi/<arch>\ for\ different\ supported\ architectures.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ If\ you\ want\ to\ use\ the\ library\ on\ a\ different\ architecture,\ supply\ your\ own}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ implementation\ of\ spi.c.\ \ You\ may\ also\ have\ to\ modify\ which\ C\ compiler\ is}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ used\ for\ compilation\ in\ the\ top\ level\ CMakeLists.txt.}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ ******************************************************************************/}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#ifndef\ SPI\_H}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ SPI\_H}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00036\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_libsd_spi_a989f77e822e496438211e3cc404eea5c}{id}};\ \textcolor{comment}{//\ ID\ for\ the\ SPI\ device,\ for\ MCUs\ that\ support\ more\ than\ 1}}
+\DoxyCodeLine{00037\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_libsd_spi_aa0c1ffedac3fa17dcfabc5c86bc5298e}{freq}};\ \textcolor{comment}{//\ SPI\ frequency}}
+\DoxyCodeLine{00038\ \}\ \mbox{\hyperlink{struct_libsd_spi}{LibsdSpi}};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_afee55cbb516e0da026b5d385c238aba1}{libsd\_spi\_init}}(\mbox{\hyperlink{struct_libsd_spi}{LibsdSpi}}*\ spi);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00058\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_a4ed3b4d490b8cd00f3f94bce8108c7e6}{libsd\_spi\_cs\_disable}}(\mbox{\hyperlink{struct_libsd_spi}{LibsdSpi}}*\ spi);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00065\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_afb0c85bb0321d4f28211ed128795b773}{libsd\_spi\_cs\_enable}}(\mbox{\hyperlink{struct_libsd_spi}{LibsdSpi}}*\ spi);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_abaaf34c5db811c379c8dfd332d58378c}{libsd\_spi\_write\_byte}}(\mbox{\hyperlink{struct_libsd_spi}{LibsdSpi}}*\ spi,\ uint8\_t\ \textcolor{keywordtype}{byte});}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00089\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_ab42a8aeb96c6630d784434ead75302b4}{libsd\_spi\_write\_buf}}(\mbox{\hyperlink{struct_libsd_spi}{LibsdSpi}}*\ spi,\ uint8\_t*\ buf,\ uint32\_t\ len);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00101\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(\mbox{\hyperlink{struct_libsd_spi}{LibsdSpi}}*\ spi,\ uint8\_t\ write\_byte,\ uint8\_t*\ read\_byte);}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00114\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_a566653035b66de938102a46b620422df}{libsd\_spi\_read\_buf}}(\mbox{\hyperlink{struct_libsd_spi}{LibsdSpi}}*\ spi,\ uint8\_t\ write\_byte,\ uint8\_t*\ buf,\ uint32\_t\ len);}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

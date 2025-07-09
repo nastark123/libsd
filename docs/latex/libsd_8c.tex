@@ -1,0 +1,508 @@
+\doxysection{libsd.\+c File Reference}
+\hypertarget{libsd_8c}{}\label{libsd_8c}\index{libsd.c@{libsd.c}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} \mbox{\hyperlink{libsd_8c_af3cbbaf29e03d8980ad91628e8e4eabc}{libsd\+\_\+card\+\_\+init}} (\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}card)
+\begin{DoxyCompactList}\small\item\em Initialize an SD card using the values in a struct. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} \mbox{\hyperlink{libsd_8c_ab0298722c83047fc1c9b40c1d5845c00}{libsd\+\_\+card\+\_\+send\+\_\+defined\+\_\+command}} (\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}card, \mbox{\hyperlink{struct_libsd_spi_defined_command}{Libsd\+Spi\+Defined\+Command}} \texorpdfstring{$\ast$}{*}cmd, \mbox{\hyperlink{union_libsd_spi_command_response}{Libsd\+Spi\+Command\+Response}} \texorpdfstring{$\ast$}{*}resp)
+\begin{DoxyCompactList}\small\item\em Send a predefined command to the card. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} \mbox{\hyperlink{libsd_8c_aa9c46209a3939d308325a0ab7a2010b6}{libsd\+\_\+card\+\_\+send\+\_\+application\+\_\+command}} (\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}card, \mbox{\hyperlink{struct_libsd_spi_application_command}{Libsd\+Spi\+Application\+Command}} \texorpdfstring{$\ast$}{*}cmd, \mbox{\hyperlink{union_libsd_spi_command_response}{Libsd\+Spi\+Command\+Response}} \texorpdfstring{$\ast$}{*}resp)
+\begin{DoxyCompactList}\small\item\em Send an application specific command to the card. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} \mbox{\hyperlink{libsd_8c_a57d87947ed864f3fa837daf44fc2b9ac}{libsd\+\_\+card\+\_\+write\+\_\+block}} (\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}card, uint32\+\_\+t addr, uint8\+\_\+t \texorpdfstring{$\ast$}{*}write\+\_\+buf, uint16\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Write a block (usually 512 bytes) to the SD card at the given block address. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} \mbox{\hyperlink{libsd_8c_ac6aeda3ef42fef5fc5f7e302ec894718}{libsd\+\_\+card\+\_\+read\+\_\+block}} (\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}card, uint32\+\_\+t addr, uint8\+\_\+t \texorpdfstring{$\ast$}{*}read\+\_\+buf, uint16\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Read a block (usually 512 bytes) from the SD card at the given block address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const uint8\+\_\+t \mbox{\hyperlink{libsd_8c_afe126337fd5a9407c4216459506fb0bf}{LIBSD\+\_\+\+START\+\_\+\+BLOCK\+\_\+\+SINGLE}} = 0x\+FE
+\begin{DoxyCompactList}\small\item\em Constant that marks start of block for single writes and both reads. \end{DoxyCompactList}\item 
+const uint8\+\_\+t \mbox{\hyperlink{libsd_8c_a6cbbba235c8f9237b7885c3271e401a2}{LIBSD\+\_\+\+START\+\_\+\+BLOCK\+\_\+\+MULTIPLE}} = 0x\+FC
+\begin{DoxyCompactList}\small\item\em Constant that marks start of block for multi-\/block writes. \end{DoxyCompactList}\item 
+const uint8\+\_\+t \mbox{\hyperlink{libsd_8c_ae9d6bd3965ee02b29be0566ca5a40433}{LIBSD\+\_\+\+STOP\+\_\+\+BLOCK\+\_\+\+MULTIPLE}} = 0x\+FD
+\begin{DoxyCompactList}\small\item\em Constant that marks end of multi-\/block write. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{libsd_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{libsd_8c_af3cbbaf29e03d8980ad91628e8e4eabc}\index{libsd.c@{libsd.c}!libsd\_card\_init@{libsd\_card\_init}}
+\index{libsd\_card\_init@{libsd\_card\_init}!libsd.c@{libsd.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_card\_init()}{libsd\_card\_init()}}
+{\footnotesize\ttfamily \label{libsd_8c_af3cbbaf29e03d8980ad91628e8e4eabc} 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} libsd\+\_\+card\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}}]{card}{}\end{DoxyParamCaption})}
+
+
+
+Initialize an SD card using the values in a struct. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em card} & Pointer to \doxylink{struct_libsd_card}{Libsd\+Card} struct for the card \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+LIBSD\+\_\+\+OK on success, LIBSD\+\_\+\+INIT\+\_\+\+FAILED on failure 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ disable\ the\ SPI\ interface's\ chip\ select}}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{spi_8c_a4ed3b4d490b8cd00f3f94bce8108c7e6}{libsd\_spi\_cs\_disable}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}});}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ SD\ cards\ need\ 80\ clock\ cycles\ to\ complete\ their\ initialization\ routing}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ write\ 10\ bytes\ of\ 0\ with\ chip\ select\ disabled\ to\ do\ this}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 10;\ i++)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_abaaf34c5db811c379c8dfd332d58378c}{libsd\_spi\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF);}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ reenable\ chip\ select\ to\ begin\ initialization}}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{spi_8c_afb0c85bb0321d4f28211ed128795b773}{libsd\_spi\_cs\_enable}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}});}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//\ status\ returned\ from\ commands}}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}}\ status;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ return\ from\ commands}}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{union_libsd_spi_command_response}{LibsdSpiCommandResponse}}\ resp;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ struct\ for\ predefined\ commands\ to\ send}}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi_defined_command}{LibsdSpiDefinedCommand}}\ cmd;}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ first\ command\ is\ GO\_IDLE\_STATE\ (CMD0)}}
+\DoxyCodeLine{00050\ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a6f824aa2a760266a6bb66287abfaf2df}{GO\_IDLE\_STATE}};}
+\DoxyCodeLine{00051\ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ =\ 0;}
+\DoxyCodeLine{00052\ \ \ \ \ status\ =\ \mbox{\hyperlink{libsd_8c_ab0298722c83047fc1c9b40c1d5845c00}{libsd\_card\_send\_defined\_command}}(card,\ \&cmd,\ \&resp);}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{if}(status\ !=\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}}\ ||\ resp.\mbox{\hyperlink{union_libsd_spi_command_response_a7fbe9577c9bfbbb3d80990df2d213c2d}{resp\_r1}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r1_abbf035f40ee8c3f20d6bd8c0e5c959c2}{resp}}\ !=\ 0x01)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a985ce5a0dd999b7ba42c3739706ce911}{LIBSD\_INIT\_FAILED}};}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ next\ command\ asks\ the\ SD\ card\ what\ voltages\ it\ supports}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//\ according\ to\ an\ online\ source\ this\ is\ mandatory,\ despite\ seeming\ optional}}
+\DoxyCodeLine{00059\ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a54ea42ae5cc87fc72f0941e48828d34d}{SEND\_IF\_COND}};}
+\DoxyCodeLine{00060\ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ =\ 0x1AA;}
+\DoxyCodeLine{00061\ \ \ \ \ status\ =\ \mbox{\hyperlink{libsd_8c_ab0298722c83047fc1c9b40c1d5845c00}{libsd\_card\_send\_defined\_command}}(card,\ \&cmd,\ \&resp);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}(status\ !=\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}}\ ||\ resp.\mbox{\hyperlink{union_libsd_spi_command_response_a0a9bb20080821a17ecb48366bc9ced45}{resp\_r7}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r7_a487b4aac9e460bb8d17dea87c03b173f}{resp}}\ !=\ 0x01)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a985ce5a0dd999b7ba42c3739706ce911}{LIBSD\_INIT\_FAILED}};}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ next\ command\ is\ ACMD41\ which\ sets\ up\ for\ high\ capacity\ -\/\ most\ modern\ cards}}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi_application_command}{LibsdSpiApplicationCommand}}\ acmd;}
+\DoxyCodeLine{00068\ \ \ \ \ acmd.\mbox{\hyperlink{struct_libsd_spi_application_command_ad7e9efd0deb50d3b31a33d92d05f5d3b}{id}}\ =\ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37af53642a5b99dbca8a7bdf0135cdc5e77}{SD\_SEND\_OP\_COND}};}
+\DoxyCodeLine{00069\ \ \ \ \ acmd.\mbox{\hyperlink{struct_libsd_spi_application_command_a05ef0db87c7c10d93b12f281d368be8a}{arg}}\ =\ 0x40000000;}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ status\ =\ \mbox{\hyperlink{libsd_8c_aa9c46209a3939d308325a0ab7a2010b6}{libsd\_card\_send\_application\_command}}(card,\ \&acmd,\ \&resp);}
+\DoxyCodeLine{00072\ \ \ \ \ \}\ \textcolor{keywordflow}{while}(resp.\mbox{\hyperlink{union_libsd_spi_command_response_a7fbe9577c9bfbbb3d80990df2d213c2d}{resp\_r1}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r1_abbf035f40ee8c3f20d6bd8c0e5c959c2}{resp}}\ ==\ 0x01\ \&\&\ status\ ==\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}});}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{if}(status\ !=\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}})\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a985ce5a0dd999b7ba42c3739706ce911}{LIBSD\_INIT\_FAILED}};}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ multiple\ things\ can\ happen\ here}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ if\ the\ response\ is\ 0x01,\ the\ card\ is\ initializing\ and\ we\ need\ to\ wait}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ resend\ the\ command}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ if\ the\ response\ is\ 0x05,\ the\ card\ is\ older\ and\ uses\ CMD1\ for\ initialization}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ TODO\ -\/\ timeout\ for\ initialization\ to\ avoid\ infinite\ loop}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{if}(resp.\mbox{\hyperlink{union_libsd_spi_command_response_a7fbe9577c9bfbbb3d80990df2d213c2d}{resp\_r1}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r1_abbf035f40ee8c3f20d6bd8c0e5c959c2}{resp}}\ ==\ 0x05)\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a07d91a17024637fc003cce13a0e58849}{SEND\_OP\_COND}};}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ =\ 0;}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ status\ =\ \mbox{\hyperlink{libsd_8c_ab0298722c83047fc1c9b40c1d5845c00}{libsd\_card\_send\_defined\_command}}(card,\ \&cmd,\ \&resp);}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{while}(resp.\mbox{\hyperlink{union_libsd_spi_command_response_a7fbe9577c9bfbbb3d80990df2d213c2d}{resp\_r1}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r1_abbf035f40ee8c3f20d6bd8c0e5c959c2}{resp}}\ ==\ 0x01\ \&\&\ status\ ==\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}});}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(status\ !=\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}})\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a985ce5a0dd999b7ba42c3739706ce911}{LIBSD\_INIT\_FAILED}};}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00094\ \ \ \ \ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//\ initialization\ has\ finished}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ TODO\ -\/\ add\ some\ info\ about\ the\ card\ to\ the\ struct\ for\ the\ user\ to\ examine}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}};}
+\DoxyCodeLine{00099\ \}}
+
+\end{DoxyCode}
+\Hypertarget{libsd_8c_ac6aeda3ef42fef5fc5f7e302ec894718}\index{libsd.c@{libsd.c}!libsd\_card\_read\_block@{libsd\_card\_read\_block}}
+\index{libsd\_card\_read\_block@{libsd\_card\_read\_block}!libsd.c@{libsd.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_card\_read\_block()}{libsd\_card\_read\_block()}}
+{\footnotesize\ttfamily \label{libsd_8c_ac6aeda3ef42fef5fc5f7e302ec894718} 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} libsd\+\_\+card\+\_\+read\+\_\+block (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}}]{card}{, }\item[{uint32\+\_\+t}]{addr}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{read\+\_\+buf}{, }\item[{uint16\+\_\+t}]{len}{}\end{DoxyParamCaption})}
+
+
+
+Read a block (usually 512 bytes) from the SD card at the given block address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em card} & Struct for the SD card to read from \\
+\hline
+{\em addr} & Address to read the block from (block address) \\
+\hline
+{\em read\+\_\+buf} & Buffer to place the read data in \\
+\hline
+{\em len} & Length of the buffer in bytes\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+LIBSD\+\_\+\+OK if the command was sent and a response was received, LIBSD\+\_\+\+TIMEOUT if no response within 8 bytes on SPI 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keywordflow}{if}(len\ <\ card-\/>block\_size)\ \{}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a0aadb7478c96bd88f0587cf94f96ede8}{LIBSD\_BUF\_TOO\_SMALL}};}
+\DoxyCodeLine{00308\ \ \ \ \ \}}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00310\ \ \ \ \ \mbox{\hyperlink{union_libsd_spi_command_response}{LibsdSpiCommandResponse}}\ resp;}
+\DoxyCodeLine{00311\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi_defined_command}{LibsdSpiDefinedCommand}}\ cmd;}
+\DoxyCodeLine{00312\ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ =\ addr;}
+\DoxyCodeLine{00313\ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a981471a896d209c94bcb967e9eda2538}{READ\_SINGLE\_BLOCK}};}
+\DoxyCodeLine{00314\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}}\ status\ =\ \mbox{\hyperlink{libsd_8c_ab0298722c83047fc1c9b40c1d5845c00}{libsd\_card\_send\_defined\_command}}(card,\ \&cmd,\ \&resp);}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00316\ \ \ \ \ \textcolor{keywordflow}{if}(status\ !=\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}}\ \textcolor{comment}{/*\ ||\ resp.resp\_r1.resp\ !=\ 0x01*/})\ \{\ \textcolor{comment}{//\ TODO\ check\ about\ the\ response\ from\ a\ read\ command}}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ status;}
+\DoxyCodeLine{00318\ \ \ \ \ \}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{comment}{//\ look\ for\ start\ of\ block\ symbol}}
+\DoxyCodeLine{00321\ \ \ \ \ uint8\_t\ read\_byte\ =\ 0xFF;}
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{keywordflow}{while}(read\_byte\ !=\ \mbox{\hyperlink{libsd_8c_afe126337fd5a9407c4216459506fb0bf}{LIBSD\_START\_BLOCK\_SINGLE}})\ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&read\_byte);}
+\DoxyCodeLine{00324\ \ \ \ \ \}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{comment}{//\ read\ a\ block\ from\ the\ SD\ card}}
+\DoxyCodeLine{00327\ \ \ \ \ \mbox{\hyperlink{spi_8c_a566653035b66de938102a46b620422df}{libsd\_spi\_read\_buf}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ read\_buf,\ card-\/>\mbox{\hyperlink{struct_libsd_card_abeab263538de0bda9f7b09161c9eecdc}{block\_size}});}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \ \ \ \ \textcolor{comment}{//\ read\ the\ CRC16\ for\ the\ data\ to\ verify\ correct}}
+\DoxyCodeLine{00330\ \ \ \ \ uint8\_t\ crc\_buf[2];}
+\DoxyCodeLine{00331\ \ \ \ \ \mbox{\hyperlink{spi_8c_a566653035b66de938102a46b620422df}{libsd\_spi\_read\_buf}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ crc\_buf,\ 2);}
+\DoxyCodeLine{00332\ }
+\DoxyCodeLine{00333\ \ \ \ \ uint16\_t\ received\_crc\ =\ crc\_buf[0];}
+\DoxyCodeLine{00334\ \ \ \ \ received\_crc\ <<=\ 8;}
+\DoxyCodeLine{00335\ \ \ \ \ received\_crc\ |=\ crc\_buf[1];}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \ \ \ \ uint16\_t\ calc\_crc\ =\ \mbox{\hyperlink{crc16_8c_ac4532ed85743133f4b4ad80869c68458}{libsd\_crc16\_calculate}}(0,\ read\_buf,\ card-\/>\mbox{\hyperlink{struct_libsd_card_abeab263538de0bda9f7b09161c9eecdc}{block\_size}});}
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keywordflow}{if}(received\_crc\ !=\ calc\_crc)\ \{}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295afd4e1e73c876c7288df868906b8a0877}{LIBSD\_CRC\_ERROR}};}
+\DoxyCodeLine{00341\ \ \ \ \ \}}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00343\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}};}
+\DoxyCodeLine{00344\ \}}
+
+\end{DoxyCode}
+\Hypertarget{libsd_8c_aa9c46209a3939d308325a0ab7a2010b6}\index{libsd.c@{libsd.c}!libsd\_card\_send\_application\_command@{libsd\_card\_send\_application\_command}}
+\index{libsd\_card\_send\_application\_command@{libsd\_card\_send\_application\_command}!libsd.c@{libsd.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_card\_send\_application\_command()}{libsd\_card\_send\_application\_command()}}
+{\footnotesize\ttfamily \label{libsd_8c_aa9c46209a3939d308325a0ab7a2010b6} 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} libsd\+\_\+card\+\_\+send\+\_\+application\+\_\+command (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}}]{card}{, }\item[{\mbox{\hyperlink{struct_libsd_spi_application_command}{Libsd\+Spi\+Application\+Command}} \texorpdfstring{$\ast$}{*}}]{cmd}{, }\item[{\mbox{\hyperlink{union_libsd_spi_command_response}{Libsd\+Spi\+Command\+Response}} \texorpdfstring{$\ast$}{*}}]{resp}{}\end{DoxyParamCaption})}
+
+
+
+Send an application specific command to the card. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em card} & Struct for the SD card to send the command to \\
+\hline
+{\em cmd} & Struct for the command to be sent \\
+\hline
+{\em resp} & Union to place the response into\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+LIBSD\+\_\+\+OK if the command was sent and a response was received, LIBSD\+\_\+\+TIMEOUT if no response within 8 bytes on SPI 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{comment}{//\ every\ application\ specific\ command\ needs\ a\ APP\_CMD\ (CMD55)\ sent\ first}}
+\DoxyCodeLine{00183\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi_defined_command}{LibsdSpiDefinedCommand}}\ app\_cmd;}
+\DoxyCodeLine{00184\ \ \ \ \ app\_cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ =\ 0;}
+\DoxyCodeLine{00185\ \ \ \ \ app\_cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5ab1f86f7ebbfab11df1eb34efbaa06205}{APP\_CMD}};}
+\DoxyCodeLine{00186\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}}\ status\ =\ \mbox{\hyperlink{libsd_8c_ab0298722c83047fc1c9b40c1d5845c00}{libsd\_card\_send\_defined\_command}}(card,\ \&app\_cmd,\ resp);}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordflow}{if}(status\ !=\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}})\ \{}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ status;}
+\DoxyCodeLine{00189\ \ \ \ \ \}}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{comment}{//\ after\ we\ have\ sent\ the\ APP\_CMD,\ send\ the\ application\ command}}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//\ same\ general\ procedure\ as\ the\ other}}
+\DoxyCodeLine{00193\ \ \ \ \ uint8\_t\ cmd\_buf[6];}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ cmd\_buf[0]\ =\ 0x40\ |\ (cmd-\/>\mbox{\hyperlink{struct_libsd_spi_application_command_ad7e9efd0deb50d3b31a33d92d05f5d3b}{id}}\ \&\ 0x3F);}
+\DoxyCodeLine{00196\ \ \ \ \ cmd\_buf[1]\ =\ (cmd-\/>\mbox{\hyperlink{struct_libsd_spi_application_command_a05ef0db87c7c10d93b12f281d368be8a}{arg}}\ >>\ 24)\ \&\ 0xFF;}
+\DoxyCodeLine{00197\ \ \ \ \ cmd\_buf[2]\ =\ (cmd-\/>\mbox{\hyperlink{struct_libsd_spi_application_command_a05ef0db87c7c10d93b12f281d368be8a}{arg}}\ >>\ 16)\ \&\ 0xFF;}
+\DoxyCodeLine{00198\ \ \ \ \ cmd\_buf[3]\ =\ (cmd-\/>\mbox{\hyperlink{struct_libsd_spi_application_command_a05ef0db87c7c10d93b12f281d368be8a}{arg}}\ >>\ 8)\ \&\ 0xFF;}
+\DoxyCodeLine{00199\ \ \ \ \ cmd\_buf[4]\ =\ cmd-\/>\mbox{\hyperlink{struct_libsd_spi_application_command_a05ef0db87c7c10d93b12f281d368be8a}{arg}}\ \&\ 0xFF;}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//\ find\ CRC7\ for\ the\ first\ 5\ bytes}}
+\DoxyCodeLine{00202\ \ \ \ \ uint8\_t\ crc\ =\ \mbox{\hyperlink{crc7_8c_a0ff6f9ff52dd297a25ec5926c7e1b24d}{libsd\_crc7\_calculate}}(cmd\_buf,\ 5);}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ cmd\_buf[5]\ =\ (crc\ <<\ 1)\ |\ 0x01;}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{comment}{//\ send\ to\ command\ buffer\ across\ the\ SPI\ interface}}
+\DoxyCodeLine{00207\ \ \ \ \ \mbox{\hyperlink{spi_8c_ab42a8aeb96c6630d784434ead75302b4}{libsd\_spi\_write\_buf}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ cmd\_buf,\ 6);}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ uint8\_t\ read\_byte\ =\ 0xFF;}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{comment}{//\ it\ can\ take\ anywhere\ from\ 0\ to\ 8\ clock\ cycles\ for\ a\ response\ according\ to\ the\ specification}}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <=\ 8;\ i++)\ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&read\_byte);}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ SD\ card\ will\ hold\ the\ line\ high\ for\ busy,\ and\ the\ MSB\ of\ any\ response\ is\ 0,\ so\ check\ for\ that}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((read\_byte\ \&\ 0x80)\ ==\ 0x00)\ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00217\ \ \ \ \ \}}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordflow}{if}(read\_byte\ ==\ 0xFF)\ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a501fd744f95cf0d30eb43f09e4ab5fd6}{LIBSD\_TIMEOUT}};\ \textcolor{comment}{//\ didn't\ get\ a\ valid\ response\ in\ time\ from\ the\ card}}
+\DoxyCodeLine{00221\ \ \ \ \ \}}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordflow}{if}(cmd-\/>\mbox{\hyperlink{struct_libsd_spi_application_command_ad7e9efd0deb50d3b31a33d92d05f5d3b}{id}}\ ==\ \mbox{\hyperlink{libsd_8h_a859ce15161dc89b1f06a323a82d82f37a1d6f66f881132e0032676f3d0fbf27ad}{ACMD13}})\ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ACMD13\ is\ the\ only\ application\ command\ with\ an\ R2\ response}}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ need\ to\ read\ an\ extra\ 2\ bytes}}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ uint8\_t\ read\_byte\_lower;}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&read\_byte\_lower);}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a2dc9b1f839595a38b6d79bbae8fd65db}{resp\_r2}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r2_ab310b3e1150523205d5fb1d6892bc70a}{resp}}\ =\ read\_byte;}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a2dc9b1f839595a38b6d79bbae8fd65db}{resp\_r2}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r2_ab310b3e1150523205d5fb1d6892bc70a}{resp}}\ <<=\ 8;}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a2dc9b1f839595a38b6d79bbae8fd65db}{resp\_r2}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r2_ab310b3e1150523205d5fb1d6892bc70a}{resp}}\ |=\ read\_byte\_lower;}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}};}
+\DoxyCodeLine{00233\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ we\ have\ a\ R1\ response}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ no\ busy\ signals\ for\ these}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a7fbe9577c9bfbbb3d80990df2d213c2d}{resp\_r1}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r1_abbf035f40ee8c3f20d6bd8c0e5c959c2}{resp}}\ =\ read\_byte;}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}};}
+\DoxyCodeLine{00239\ \ \ \ \ \}}
+\DoxyCodeLine{00240\ \}}
+
+\end{DoxyCode}
+\Hypertarget{libsd_8c_ab0298722c83047fc1c9b40c1d5845c00}\index{libsd.c@{libsd.c}!libsd\_card\_send\_defined\_command@{libsd\_card\_send\_defined\_command}}
+\index{libsd\_card\_send\_defined\_command@{libsd\_card\_send\_defined\_command}!libsd.c@{libsd.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_card\_send\_defined\_command()}{libsd\_card\_send\_defined\_command()}}
+{\footnotesize\ttfamily \label{libsd_8c_ab0298722c83047fc1c9b40c1d5845c00} 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} libsd\+\_\+card\+\_\+send\+\_\+defined\+\_\+command (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}}]{card}{, }\item[{\mbox{\hyperlink{struct_libsd_spi_defined_command}{Libsd\+Spi\+Defined\+Command}} \texorpdfstring{$\ast$}{*}}]{cmd}{, }\item[{\mbox{\hyperlink{union_libsd_spi_command_response}{Libsd\+Spi\+Command\+Response}} \texorpdfstring{$\ast$}{*}}]{resp}{}\end{DoxyParamCaption})}
+
+
+
+Send a predefined command to the card. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em card} & Struct for the SD card to send the command to \\
+\hline
+{\em cmd} & Struct for the command to be sent \\
+\hline
+{\em resp} & Union to place response into\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+LIBSD\+\_\+\+OK if the command was sent and a response was received, LIBSD\+\_\+\+TIMEOUT if no response within 8 bytes on SPI 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//\ first,\ we\ need\ to\ create\ a\ cmd\_bufer\ with\ the\ command\ to\ send\ across\ the\ SPI\ interface}}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ each\ command\ is\ 48\ bits\ (6\ bytes)}}
+\DoxyCodeLine{00104\ \ \ \ \ uint8\_t\ cmd\_buf[6];}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ cmd\_buf[0]\ =\ 0x40\ |\ (cmd-\/>\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ \&\ 0x3F);}
+\DoxyCodeLine{00107\ \ \ \ \ cmd\_buf[1]\ =\ (cmd-\/>\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ >>\ 24)\ \&\ 0xFF;}
+\DoxyCodeLine{00108\ \ \ \ \ cmd\_buf[2]\ =\ (cmd-\/>\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ >>\ 16)\ \&\ 0xFF;}
+\DoxyCodeLine{00109\ \ \ \ \ cmd\_buf[3]\ =\ (cmd-\/>\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ >>\ 8)\ \&\ 0xFF;}
+\DoxyCodeLine{00110\ \ \ \ \ cmd\_buf[4]\ =\ cmd-\/>\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ \&\ 0xFF;}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ find\ CRC7\ for\ the\ first\ 5\ bytes}}
+\DoxyCodeLine{00113\ \ \ \ \ uint8\_t\ crc\ =\ \mbox{\hyperlink{crc7_8c_a0ff6f9ff52dd297a25ec5926c7e1b24d}{libsd\_crc7\_calculate}}(cmd\_buf,\ 5);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ cmd\_buf[5]\ =\ (crc\ <<\ 1)\ |\ 0x01;}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{comment}{//\ send\ to\ command\ buffer\ across\ the\ SPI\ interface}}
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{spi_8c_ab42a8aeb96c6630d784434ead75302b4}{libsd\_spi\_write\_buf}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ cmd\_buf,\ 6);}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ uint8\_t\ read\_byte\ =\ 0xFF;}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ it\ can\ take\ anywhere\ from\ 0\ to\ 8\ clock\ cycles\ for\ a\ response\ according\ to\ the\ specification}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <=\ 8;\ i++)\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&read\_byte);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ SD\ card\ will\ hold\ the\ line\ high\ for\ busy,\ and\ the\ MSB\ of\ any\ response\ is\ 0,\ so\ check\ for\ that}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((read\_byte\ \&\ 0x80)\ ==\ 0x00)\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00128\ \ \ \ \ \}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordflow}{if}(read\_byte\ ==\ 0xFF)\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a501fd744f95cf0d30eb43f09e4ab5fd6}{LIBSD\_TIMEOUT}};\ \textcolor{comment}{//\ didn't\ get\ a\ valid\ response\ in\ time\ from\ the\ card}}
+\DoxyCodeLine{00132\ \ \ \ \ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{if}(cmd-\/>\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ ==\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a651ee13eedad94e8b3e08c5a666fb820}{CMD8}})\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CMD8\ is\ the\ only\ predefined\ command\ that\ responds\ in\ an\ R7\ format}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a0a9bb20080821a17ecb48366bc9ced45}{resp\_r7}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r7_a487b4aac9e460bb8d17dea87c03b173f}{resp}}\ =\ read\_byte;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a0a9bb20080821a17ecb48366bc9ced45}{resp\_r7}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r7_ad18875ac3f248dc3dfb5e2add63a632f}{extra}}\ =\ 0;}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ R7\ format\ has\ an\ additional\ 4\ bytes\ of\ status}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ i++)\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&read\_byte);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a0a9bb20080821a17ecb48366bc9ced45}{resp\_r7}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r7_ad18875ac3f248dc3dfb5e2add63a632f}{extra}}\ <<=\ 8;}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a0a9bb20080821a17ecb48366bc9ced45}{resp\_r7}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r7_ad18875ac3f248dc3dfb5e2add63a632f}{extra}}\ |=\ read\_byte;}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}};}
+\DoxyCodeLine{00146\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(cmd-\/>\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ ==\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5acb344739b2733fe7ef0c8f28a92896d1}{CMD58}})\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CMD58\ is\ the\ only\ predefined\ command\ that\ responds\ in\ an\ R3\ format}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a6aae5ced66e6a6b3214b945cc615a0d3}{resp\_r3}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r3_a0d6e64ba43c84a00cd7870ce148267bc}{resp}}\ =\ read\_byte;}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a6aae5ced66e6a6b3214b945cc615a0d3}{resp\_r3}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r3_adbb43155674764664f4bae6da67a5fe9}{extra}}\ =\ 0;}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ R3\ format\ has\ an\ additional\ 4\ bytes\ of\ status}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ i++)\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&read\_byte);}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a6aae5ced66e6a6b3214b945cc615a0d3}{resp\_r3}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r3_adbb43155674764664f4bae6da67a5fe9}{extra}}\ <<=\ 8;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a6aae5ced66e6a6b3214b945cc615a0d3}{resp\_r3}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r3_adbb43155674764664f4bae6da67a5fe9}{extra}}\ |=\ read\_byte;}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}};}
+\DoxyCodeLine{00158\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(cmd-\/>\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ ==\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5adb3d8777afe922d38ef02e8dcfeb8420}{CMD13}})\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CMD13\ is\ the\ only\ predefined\ command\ that\ responds\ in\ an\ R2\ format}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ need\ to\ read\ an\ extra\ 2\ bytes}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ uint8\_t\ read\_byte\_lower;}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&read\_byte\_lower);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a2dc9b1f839595a38b6d79bbae8fd65db}{resp\_r2}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r2_ab310b3e1150523205d5fb1d6892bc70a}{resp}}\ =\ read\_byte;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a2dc9b1f839595a38b6d79bbae8fd65db}{resp\_r2}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r2_ab310b3e1150523205d5fb1d6892bc70a}{resp}}\ <<=\ 8;}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a2dc9b1f839595a38b6d79bbae8fd65db}{resp\_r2}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r2_ab310b3e1150523205d5fb1d6892bc70a}{resp}}\ |=\ read\_byte\_lower;}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}};}
+\DoxyCodeLine{00168\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ we\ have\ a\ R1\ response}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ some\ of\ these\ can\ have\ an\ optional\ busy\ signal,\ which\ this\ checks\ for}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ could\ probably\ be\ optimized,\ but\ this\ is\ a\ quick\ way\ to\ get\ this\ working}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ resp-\/>\mbox{\hyperlink{union_libsd_spi_command_response_a7fbe9577c9bfbbb3d80990df2d213c2d}{resp\_r1}}.\mbox{\hyperlink{struct_libsd_spi_command_response_r1_abbf035f40ee8c3f20d6bd8c0e5c959c2}{resp}}\ =\ read\_byte;}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&read\_byte);}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{while}(read\_byte\ ==\ 0x00);}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}};}
+\DoxyCodeLine{00178\ \ \ \ \ \}}
+\DoxyCodeLine{00179\ \}}
+
+\end{DoxyCode}
+\Hypertarget{libsd_8c_a57d87947ed864f3fa837daf44fc2b9ac}\index{libsd.c@{libsd.c}!libsd\_card\_write\_block@{libsd\_card\_write\_block}}
+\index{libsd\_card\_write\_block@{libsd\_card\_write\_block}!libsd.c@{libsd.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_card\_write\_block()}{libsd\_card\_write\_block()}}
+{\footnotesize\ttfamily \label{libsd_8c_a57d87947ed864f3fa837daf44fc2b9ac} 
+\mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{Libsd\+Return\+Status}} libsd\+\_\+card\+\_\+write\+\_\+block (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_card}{Libsd\+Card}} \texorpdfstring{$\ast$}{*}}]{card}{, }\item[{uint32\+\_\+t}]{addr}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{write\+\_\+buf}{, }\item[{uint16\+\_\+t}]{len}{}\end{DoxyParamCaption})}
+
+
+
+Write a block (usually 512 bytes) to the SD card at the given block address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em card} & Struct for the SD card to write to \\
+\hline
+{\em addr} & Address to write the block to (block address) \\
+\hline
+{\em write\+\_\+buf} & Buffer containing data to be written \\
+\hline
+{\em len} & Length of the buffer in bytes\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+LIBSD\+\_\+\+OK if the command was sent and a response was received, LIBSD\+\_\+\+TIMEOUT if no response within 8 bytes on SPI 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keywordflow}{if}(len\ <\ card-\/>block\_size)\ \{}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a0aadb7478c96bd88f0587cf94f96ede8}{LIBSD\_BUF\_TOO\_SMALL}};}
+\DoxyCodeLine{00245\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(len\ >\ card-\/>\mbox{\hyperlink{struct_libsd_card_abeab263538de0bda9f7b09161c9eecdc}{block\_size}})\ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a0f82db21f4263d8d617d0f0fc3ea9bd0}{LIBSD\_BUF\_TOO\_LARGE}};}
+\DoxyCodeLine{00247\ \ \ \ \ \}}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \mbox{\hyperlink{union_libsd_spi_command_response}{LibsdSpiCommandResponse}}\ resp;}
+\DoxyCodeLine{00250\ \ \ \ \ \mbox{\hyperlink{struct_libsd_spi_defined_command}{LibsdSpiDefinedCommand}}\ cmd;}
+\DoxyCodeLine{00251\ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_afcc3013cf1654bce15b5bc0beb4f7129}{arg}}\ =\ addr;}
+\DoxyCodeLine{00252\ \ \ \ \ cmd.\mbox{\hyperlink{struct_libsd_spi_defined_command_ad1b9abc95a1720e7595220cc366e8ab4}{id}}\ =\ \mbox{\hyperlink{libsd_8h_af93c4737aafa5967c62525b2db861bd5a577bfdd5ef3f3d9b50bdecbd7cf04b9e}{WRITE\_BLOCK}};}
+\DoxyCodeLine{00253\ \ \ \ \ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295}{LibsdReturnStatus}}\ status\ =\ \mbox{\hyperlink{libsd_8c_ab0298722c83047fc1c9b40c1d5845c00}{libsd\_card\_send\_defined\_command}}(card,\ \&cmd,\ \&resp);}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordflow}{if}(status\ !=\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}}\ \textcolor{comment}{/*\ ||\ resp.resp\_r1.resp\ !=\ 0x01*/})\ \{\ \textcolor{comment}{//\ TODO\ check\ about\ the\ response\ from\ a\ write\ command}}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ status;}
+\DoxyCodeLine{00257\ \ \ \ \ \}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{comment}{//\ write\ start\ of\ block\ symbol}}
+\DoxyCodeLine{00260\ \ \ \ \ \mbox{\hyperlink{spi_8c_abaaf34c5db811c379c8dfd332d58378c}{libsd\_spi\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ \mbox{\hyperlink{libsd_8c_afe126337fd5a9407c4216459506fb0bf}{LIBSD\_START\_BLOCK\_SINGLE}});}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{comment}{//\ write\ the\ actual\ data}}
+\DoxyCodeLine{00263\ \ \ \ \ \mbox{\hyperlink{spi_8c_ab42a8aeb96c6630d784434ead75302b4}{libsd\_spi\_write\_buf}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ write\_buf,\ len);}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{comment}{//\ calculate\ CRC\ and\ send}}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{comment}{//\ uint16\_t\ crc\ =\ libsd\_crc16\_calculate\_byte(0,\ LIBSD\_START\_BLOCK\_SINGLE);}}
+\DoxyCodeLine{00267\ \ \ \ \ uint16\_t\ crc\ =\ \mbox{\hyperlink{crc16_8c_ac4532ed85743133f4b4ad80869c68458}{libsd\_crc16\_calculate}}(0,\ write\_buf,\ len);}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \ \ \ \ \mbox{\hyperlink{spi_8c_abaaf34c5db811c379c8dfd332d58378c}{libsd\_spi\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ crc\ >>\ 8);}
+\DoxyCodeLine{00270\ \ \ \ \ \mbox{\hyperlink{spi_8c_abaaf34c5db811c379c8dfd332d58378c}{libsd\_spi\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ crc\ \&\ 0xFF);}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \ uint8\_t\ read\_byte\ =\ 0xFF;}
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{comment}{//\ it\ can\ take\ anywhere\ from\ 0\ to\ 8\ clock\ cycles\ for\ a\ response\ according\ to\ the\ specification}}
+\DoxyCodeLine{00274\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <=\ 8;\ i++)\ \{}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&read\_byte);}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ SD\ card\ will\ hold\ the\ line\ high\ for\ busy,\ and\ the\ MSB\ of\ any\ response\ is\ 0,\ so\ check\ for\ that}}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((read\_byte\ \&\ 0x01)\ \&\&\ (\string~read\_byte\ \&\ 0x10))\ \{}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00280\ \ \ \ \ \}}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{comment}{//\ wait\ for\ the\ write\ to\ be\ processed\ by\ the\ card}}
+\DoxyCodeLine{00283\ \ \ \ \ uint8\_t\ busy\ =\ 0x00;}
+\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keywordflow}{while}(busy\ ==\ 0)\ \{}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\_spi\_read\_write\_byte}}(card-\/>\mbox{\hyperlink{struct_libsd_card_aaddc55f0f0f4a8fed892f97bab788654}{spi}},\ 0xFF,\ \&busy);}
+\DoxyCodeLine{00286\ \ \ \ \ \}}
+\DoxyCodeLine{00287\ }
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{comment}{//\ TODO\ -\/\ maybe\ make\ some\ constants\ for\ these???}}
+\DoxyCodeLine{00289\ \ \ \ \ uint8\_t\ write\_status\ =\ (read\_byte\ >>\ 1)\ \&\ 0x07;}
+\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordflow}{switch}(write\_status)\ \{}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x02:}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295aa290c988d692cfa633e720113b73990f}{LIBSD\_OK}};}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x05:}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295afd4e1e73c876c7288df868906b8a0877}{LIBSD\_CRC\_ERROR}};}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x06:}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a0912ae679e57403dfc8b7b25d9af2aef}{LIBSD\_WRITE\_FAILED}};}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{libsd_8h_a35e9ef4fba3790348b74b5f1bb30e295a0912ae679e57403dfc8b7b25d9af2aef}{LIBSD\_WRITE\_FAILED}};}
+\DoxyCodeLine{00302\ \ \ \ \ \}}
+\DoxyCodeLine{00303\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-var-members}
+\Hypertarget{libsd_8c_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{libsd_8c_a6cbbba235c8f9237b7885c3271e401a2}\index{libsd.c@{libsd.c}!LIBSD\_START\_BLOCK\_MULTIPLE@{LIBSD\_START\_BLOCK\_MULTIPLE}}
+\index{LIBSD\_START\_BLOCK\_MULTIPLE@{LIBSD\_START\_BLOCK\_MULTIPLE}!libsd.c@{libsd.c}}
+\doxysubsubsection{\texorpdfstring{LIBSD\_START\_BLOCK\_MULTIPLE}{LIBSD\_START\_BLOCK\_MULTIPLE}}
+{\footnotesize\ttfamily \label{libsd_8c_a6cbbba235c8f9237b7885c3271e401a2} 
+const uint8\+\_\+t LIBSD\+\_\+\+START\+\_\+\+BLOCK\+\_\+\+MULTIPLE = 0x\+FC}
+
+
+
+Constant that marks start of block for multi-\/block writes. 
+
+\Hypertarget{libsd_8c_afe126337fd5a9407c4216459506fb0bf}\index{libsd.c@{libsd.c}!LIBSD\_START\_BLOCK\_SINGLE@{LIBSD\_START\_BLOCK\_SINGLE}}
+\index{LIBSD\_START\_BLOCK\_SINGLE@{LIBSD\_START\_BLOCK\_SINGLE}!libsd.c@{libsd.c}}
+\doxysubsubsection{\texorpdfstring{LIBSD\_START\_BLOCK\_SINGLE}{LIBSD\_START\_BLOCK\_SINGLE}}
+{\footnotesize\ttfamily \label{libsd_8c_afe126337fd5a9407c4216459506fb0bf} 
+const uint8\+\_\+t LIBSD\+\_\+\+START\+\_\+\+BLOCK\+\_\+\+SINGLE = 0x\+FE}
+
+
+
+Constant that marks start of block for single writes and both reads. 
+
+\Hypertarget{libsd_8c_ae9d6bd3965ee02b29be0566ca5a40433}\index{libsd.c@{libsd.c}!LIBSD\_STOP\_BLOCK\_MULTIPLE@{LIBSD\_STOP\_BLOCK\_MULTIPLE}}
+\index{LIBSD\_STOP\_BLOCK\_MULTIPLE@{LIBSD\_STOP\_BLOCK\_MULTIPLE}!libsd.c@{libsd.c}}
+\doxysubsubsection{\texorpdfstring{LIBSD\_STOP\_BLOCK\_MULTIPLE}{LIBSD\_STOP\_BLOCK\_MULTIPLE}}
+{\footnotesize\ttfamily \label{libsd_8c_ae9d6bd3965ee02b29be0566ca5a40433} 
+const uint8\+\_\+t LIBSD\+\_\+\+STOP\+\_\+\+BLOCK\+\_\+\+MULTIPLE = 0x\+FD}
+
+
+
+Constant that marks end of multi-\/block write. 
+

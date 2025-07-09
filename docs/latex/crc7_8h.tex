@@ -1,0 +1,45 @@
+\doxysection{crc7.\+h File Reference}
+\hypertarget{crc7_8h}{}\label{crc7_8h}\index{crc7.h@{crc7.h}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{crc7_8h_a6b936a16cb56b19f286e5f6543ffc4c5}{libsd\+\_\+crc7\+\_\+calculate\+\_\+byte}} (uint8\+\_\+t crc\+\_\+last, uint8\+\_\+t data)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{crc7_8h_a0ff6f9ff52dd297a25ec5926c7e1b24d}{libsd\+\_\+crc7\+\_\+calculate}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, int len)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{crc7_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{crc7_8h_a0ff6f9ff52dd297a25ec5926c7e1b24d}\index{crc7.h@{crc7.h}!libsd\_crc7\_calculate@{libsd\_crc7\_calculate}}
+\index{libsd\_crc7\_calculate@{libsd\_crc7\_calculate}!crc7.h@{crc7.h}}
+\doxysubsubsection{\texorpdfstring{libsd\_crc7\_calculate()}{libsd\_crc7\_calculate()}}
+{\footnotesize\ttfamily \label{crc7_8h_a0ff6f9ff52dd297a25ec5926c7e1b24d} 
+uint8\+\_\+t libsd\+\_\+crc7\+\_\+calculate (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{int}]{len}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ uint8\_t\ crc\_val\ =\ 0;}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ len;\ i++)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ crc\_val\ =\ \mbox{\hyperlink{crc7_8c_a6b936a16cb56b19f286e5f6543ffc4c5}{libsd\_crc7\_calculate\_byte}}(crc\_val,\ data[i]);}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ crc\_val;}
+\DoxyCodeLine{00064\ \}}
+
+\end{DoxyCode}
+\Hypertarget{crc7_8h_a6b936a16cb56b19f286e5f6543ffc4c5}\index{crc7.h@{crc7.h}!libsd\_crc7\_calculate\_byte@{libsd\_crc7\_calculate\_byte}}
+\index{libsd\_crc7\_calculate\_byte@{libsd\_crc7\_calculate\_byte}!crc7.h@{crc7.h}}
+\doxysubsubsection{\texorpdfstring{libsd\_crc7\_calculate\_byte()}{libsd\_crc7\_calculate\_byte()}}
+{\footnotesize\ttfamily \label{crc7_8h_a6b936a16cb56b19f286e5f6543ffc4c5} 
+uint8\+\_\+t libsd\+\_\+crc7\+\_\+calculate\+\_\+byte (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{crc\+\_\+last}{, }\item[{uint8\+\_\+t}]{data}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{crc7_8c_a86be51ca7ef6bac9f1cbd912f2046bd0}{crc7\_table}}[(data\ \string^\ (crc\_last\ <<\ 1))\ \&\ 0xFFU];}
+\DoxyCodeLine{00055\ \}}
+
+\end{DoxyCode}

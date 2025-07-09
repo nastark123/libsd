@@ -1,0 +1,204 @@
+\doxysection{spi.\+c File Reference}
+\hypertarget{spi_8c}{}\label{spi_8c}\index{spi.c@{spi.c}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{spi_8c_afee55cbb516e0da026b5d385c238aba1}{libsd\+\_\+spi\+\_\+init}} (\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}spi)
+\begin{DoxyCompactList}\small\item\em Initialize SPI interface that the library will be using. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{spi_8c_a4ed3b4d490b8cd00f3f94bce8108c7e6}{libsd\+\_\+spi\+\_\+cs\+\_\+disable}} (\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}spi)
+\begin{DoxyCompactList}\small\item\em Disable the chip select pin, which is used during the initialization routine. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{spi_8c_afb0c85bb0321d4f28211ed128795b773}{libsd\+\_\+spi\+\_\+cs\+\_\+enable}} (\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}spi)
+\begin{DoxyCompactList}\small\item\em Enable the chip select pin, used during the initialization routine. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{spi_8c_abaaf34c5db811c379c8dfd332d58378c}{libsd\+\_\+spi\+\_\+write\+\_\+byte}} (\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}spi, uint8\+\_\+t byte)
+\begin{DoxyCompactList}\small\item\em Write a single byte (8 bits) MSB first across the SPI interface. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{spi_8c_ab42a8aeb96c6630d784434ead75302b4}{libsd\+\_\+spi\+\_\+write\+\_\+buf}} (\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}spi, uint8\+\_\+t \texorpdfstring{$\ast$}{*}buf, uint32\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Write a buffer of bytes across the SPI interface. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}{libsd\+\_\+spi\+\_\+read\+\_\+write\+\_\+byte}} (\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}spi, uint8\+\_\+t write\+\_\+byte, uint8\+\_\+t \texorpdfstring{$\ast$}{*}read\+\_\+byte)
+\begin{DoxyCompactList}\small\item\em Read a single byte from the SPI interface. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{spi_8c_a566653035b66de938102a46b620422df}{libsd\+\_\+spi\+\_\+read\+\_\+buf}} (\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}spi, uint8\+\_\+t write\+\_\+byte, uint8\+\_\+t \texorpdfstring{$\ast$}{*}buf, uint32\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Read a single byte from the SPI interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{spi_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{spi_8c_a4ed3b4d490b8cd00f3f94bce8108c7e6}\index{spi.c@{spi.c}!libsd\_spi\_cs\_disable@{libsd\_spi\_cs\_disable}}
+\index{libsd\_spi\_cs\_disable@{libsd\_spi\_cs\_disable}!spi.c@{spi.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_spi\_cs\_disable()}{libsd\_spi\_cs\_disable()}}
+{\footnotesize\ttfamily \label{spi_8c_a4ed3b4d490b8cd00f3f94bce8108c7e6} 
+void libsd\+\_\+spi\+\_\+cs\+\_\+disable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}}]{spi}{}\end{DoxyParamCaption})}
+
+
+
+Disable the chip select pin, which is used during the initialization routine. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spi} & Pointer to a \doxylink{struct_libsd_spi}{Libsd\+Spi} struct for the SPI interface to disable chip select \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Chip\ select\ needs\ to\ be\ disabled\ during\ initialization}}
+\DoxyCodeLine{00037\ \ \ \ \ gpio\_set\_function(PICO\_DEFAULT\_SPI\_CSN\_PIN,\ GPIO\_FUNC\_NULL);}
+\DoxyCodeLine{00038\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{spi_8c_afb0c85bb0321d4f28211ed128795b773}\index{spi.c@{spi.c}!libsd\_spi\_cs\_enable@{libsd\_spi\_cs\_enable}}
+\index{libsd\_spi\_cs\_enable@{libsd\_spi\_cs\_enable}!spi.c@{spi.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_spi\_cs\_enable()}{libsd\_spi\_cs\_enable()}}
+{\footnotesize\ttfamily \label{spi_8c_afb0c85bb0321d4f28211ed128795b773} 
+void libsd\+\_\+spi\+\_\+cs\+\_\+enable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}}]{spi}{}\end{DoxyParamCaption})}
+
+
+
+Enable the chip select pin, used during the initialization routine. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spi} & Pointer to a \doxylink{struct_libsd_spi}{Libsd\+Spi} struct for the SPI interface to enable chip select \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Chip\ select\ needs\ to\ be\ disabled\ during\ initialization}}
+\DoxyCodeLine{00042\ \ \ \ \ gpio\_set\_function(PICO\_DEFAULT\_SPI\_CSN\_PIN,\ GPIO\_FUNC\_SPI);}
+\DoxyCodeLine{00043\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{spi_8c_afee55cbb516e0da026b5d385c238aba1}\index{spi.c@{spi.c}!libsd\_spi\_init@{libsd\_spi\_init}}
+\index{libsd\_spi\_init@{libsd\_spi\_init}!spi.c@{spi.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_spi\_init()}{libsd\_spi\_init()}}
+{\footnotesize\ttfamily \label{spi_8c_afee55cbb516e0da026b5d385c238aba1} 
+void libsd\+\_\+spi\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}}]{spi}{}\end{DoxyParamCaption})}
+
+
+
+Initialize SPI interface that the library will be using. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spi} & Pointer to a \doxylink{struct_libsd_spi}{Libsd\+Spi} struct for the SPI interface to initialize\\
+\hline
+\end{DoxyParams}
+The SPI interface should be initialized to the given frequency. For MCUs that have limits on what frequencies can be assigned, the closest one should be chosen. Note that the user of the library can choose the SPI frequency that the interface will request, so you can select one that works with your system. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ currently\ just\ support\ default\ SPI}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ TODO\ support\ multiple\ interfaces}}
+\DoxyCodeLine{00026\ \ \ \ \ spi\_init(spi\_default,\ spi-\/>\mbox{\hyperlink{struct_libsd_spi_aa0c1ffedac3fa17dcfabc5c86bc5298e}{freq}});}
+\DoxyCodeLine{00027\ \ \ \ \ gpio\_set\_function(PICO\_DEFAULT\_SPI\_RX\_PIN,\ GPIO\_FUNC\_SPI);}
+\DoxyCodeLine{00028\ \ \ \ \ gpio\_set\_function(PICO\_DEFAULT\_SPI\_SCK\_PIN,\ GPIO\_FUNC\_SPI);}
+\DoxyCodeLine{00029\ \ \ \ \ gpio\_set\_function(PICO\_DEFAULT\_SPI\_TX\_PIN,\ GPIO\_FUNC\_SPI);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Chip\ select\ needs\ to\ be\ disabled\ during\ initialization}}
+\DoxyCodeLine{00032\ \ \ \ \ gpio\_set\_function(PICO\_DEFAULT\_SPI\_CSN\_PIN,\ GPIO\_FUNC\_NULL);}
+\DoxyCodeLine{00033\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{spi_8c_a566653035b66de938102a46b620422df}\index{spi.c@{spi.c}!libsd\_spi\_read\_buf@{libsd\_spi\_read\_buf}}
+\index{libsd\_spi\_read\_buf@{libsd\_spi\_read\_buf}!spi.c@{spi.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_spi\_read\_buf()}{libsd\_spi\_read\_buf()}}
+{\footnotesize\ttfamily \label{spi_8c_a566653035b66de938102a46b620422df} 
+void libsd\+\_\+spi\+\_\+read\+\_\+buf (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}}]{spi}{, }\item[{uint8\+\_\+t}]{write\+\_\+byte}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buf}{, }\item[{uint32\+\_\+t}]{len}{}\end{DoxyParamCaption})}
+
+
+
+Read a single byte from the SPI interface. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spi} & SPI interface to read from \\
+\hline
+{\em write\+\_\+byte} & Byte to transfer on the write side (typically 0x\+FF for SD) \\
+\hline
+{\em buf} & Pointer to first byte of read buffer \\
+\hline
+{\em len} & Number of bytes to read\\
+\hline
+\end{DoxyParams}
+This should read len bytes from the SPI master and output a byte repeatedly across the SPI interface. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ spi\_read\_blocking(spi\_default,\ write\_byte,\ buf,\ len);}
+\DoxyCodeLine{00059\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c}\index{spi.c@{spi.c}!libsd\_spi\_read\_write\_byte@{libsd\_spi\_read\_write\_byte}}
+\index{libsd\_spi\_read\_write\_byte@{libsd\_spi\_read\_write\_byte}!spi.c@{spi.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_spi\_read\_write\_byte()}{libsd\_spi\_read\_write\_byte()}}
+{\footnotesize\ttfamily \label{spi_8c_aefbf78ce76b86e4cba92dabcbf07ed2c} 
+void libsd\+\_\+spi\+\_\+read\+\_\+write\+\_\+byte (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}}]{spi}{, }\item[{uint8\+\_\+t}]{write\+\_\+byte}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{read\+\_\+byte}{}\end{DoxyParamCaption})}
+
+
+
+Read a single byte from the SPI interface. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spi} & SPI interface to read from \\
+\hline
+{\em write\+\_\+byte} & Byte to transfer on the write side (typically 0x\+FF for SD) \\
+\hline
+{\em byte} & Pointer to byte to read into\\
+\hline
+\end{DoxyParams}
+This should read a byte from the SPI master and output a byte across the SPI interface. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ spi\_read\_blocking(spi\_default,\ write\_byte,\ read\_byte,\ 1);}
+\DoxyCodeLine{00055\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{spi_8c_ab42a8aeb96c6630d784434ead75302b4}\index{spi.c@{spi.c}!libsd\_spi\_write\_buf@{libsd\_spi\_write\_buf}}
+\index{libsd\_spi\_write\_buf@{libsd\_spi\_write\_buf}!spi.c@{spi.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_spi\_write\_buf()}{libsd\_spi\_write\_buf()}}
+{\footnotesize\ttfamily \label{spi_8c_ab42a8aeb96c6630d784434ead75302b4} 
+void libsd\+\_\+spi\+\_\+write\+\_\+buf (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}}]{spi}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buf}{, }\item[{uint32\+\_\+t}]{len}{}\end{DoxyParamCaption})}
+
+
+
+Write a buffer of bytes across the SPI interface. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spi} & SPI interface to write to \\
+\hline
+{\em buf} & Pointer to first byte to write \\
+\hline
+{\em len} & Total number of bytes to write\\
+\hline
+\end{DoxyParams}
+If you wish, this can simply be a repeated call to the libsd\+\_\+spi\+\_\+write\+\_\+byte function. It should block until all data transfers. However, for more capable MCUs, this could be implemented with DMA to improve performance 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ spi\_write\_blocking(spi\_default,\ buf,\ len);}
+\DoxyCodeLine{00051\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{spi_8c_abaaf34c5db811c379c8dfd332d58378c}\index{spi.c@{spi.c}!libsd\_spi\_write\_byte@{libsd\_spi\_write\_byte}}
+\index{libsd\_spi\_write\_byte@{libsd\_spi\_write\_byte}!spi.c@{spi.c}}
+\doxysubsubsection{\texorpdfstring{libsd\_spi\_write\_byte()}{libsd\_spi\_write\_byte()}}
+{\footnotesize\ttfamily \label{spi_8c_abaaf34c5db811c379c8dfd332d58378c} 
+void libsd\+\_\+spi\+\_\+write\+\_\+byte (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_libsd_spi}{Libsd\+Spi}} \texorpdfstring{$\ast$}{*}}]{spi}{, }\item[{uint8\+\_\+t}]{byte}{}\end{DoxyParamCaption})}
+
+
+
+Write a single byte (8 bits) MSB first across the SPI interface. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spi} & SPI interface to write to \\
+\hline
+{\em byte} & Byte to be written\\
+\hline
+\end{DoxyParams}
+This should simply write the byte across the SPI master. It should block until the byte transfers. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ spi\_write\_blocking(spi\_default,\ \&\textcolor{keywordtype}{byte},\ 1);}
+\DoxyCodeLine{00047\ \ \}}
+
+\end{DoxyCode}

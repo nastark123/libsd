@@ -16,8 +16,9 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * This file contains the functions provided to the user by the library for
- * interacting with the SD card (reading, writing, etc)
+ * @file libsd.h
+ * @brief This file contains the functions provided to the user by the library
+ * for interacting with the SD card (reading, writing, etc)
  ******************************************************************************/
 
 #ifndef LIBSD_H
